@@ -89,6 +89,8 @@ protected:
 	bool m_isFacingRight = true;
 
 	sf::CircleShape m_bitArray[20];
+	int m_bitsCount = 0;
+	int m_bigBitIndex = 0;
 	
 	void movePlayer();
 	bool checkCollision(sf::CircleShape t_circleOne, sf::CircleShape t_CircleTwo);

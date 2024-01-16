@@ -27,14 +27,21 @@ void Game::init()
 	m_player.setOrigin(20.0f, 20.0f);
 	m_player.setFillColor(sf::Color::Yellow);
 	m_player.setPosition(50.0f, 100.0f);
-
+	//ROLL FOR BIGBIT
+	m_bigBitIndex = rand() % 20;
 	for (int i = 0; i < 20; i++)
 	{
 		m_bitArray[i].setRadius(5.0f);
 		m_bitArray[i].setOrigin(5.0f, 5.0f);
 		m_bitArray[i].setFillColor(sf::Color::White);
-		m_bitArray[i].setPosition(100.0f + (i * 35), 100.0f);
+		m_bitArray[i].setPosition(20.0f + (i * 40), 100.0f);
+		if (i == m_bigBitIndex)
+		{
+			m_bitArray[i].setRadius(10.0f);
+			m_bitArray[i].setOrigin(10.0f, 10.0f);
+		}
 	}
+	m_bitsCount = 20;
 
 	m_scoreText.setFont(m_arialFont);
 	m_scoreText.setPosition(20, 20);
@@ -159,6 +166,7 @@ bool Game::checkCollision(sf::CircleShape t_circleOne, sf::CircleShape t_CircleT
 	if (radiusSum >= distance)
 	{
 		m_score += 10;
+		m_bitsCount--;
 		return true;
 	}
 	else
@@ -176,6 +184,24 @@ void Game::update(double dt)
 	}
 	std::string updateScore = "Score: " + std::to_string(m_score);
 	m_scoreText.setString(updateScore);
+	if(m_bitsCount <= 0)
+	{
+		m_bigBitIndex = rand() % 20;
+		for (int i = 0; i < 20; i++)
+		{
+			m_bitArray[i].setRadius(5.0f);
+			m_bitArray[i].setOrigin(5.0f, 5.0f);
+			m_bitArray[i].setFillColor(sf::Color::White);
+			m_bitArray[i].setPosition(20.0f + (i * 35), 100.0f);
+			if (i == m_bigBitIndex)
+			{
+				m_bitArray[i].setRadius(10.0f);
+				m_bitArray[i].setOrigin(10.0f, 10.0f);
+			}
+		}
+
+		m_bitsCount = 20;
+	}
 }
 
 ////////////////////////////////////////////////////////////
