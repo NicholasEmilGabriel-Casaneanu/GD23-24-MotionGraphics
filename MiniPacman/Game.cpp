@@ -171,12 +171,12 @@ void Game::moveEnemy()
 	{
 		if (m_player.getPosition().x > currentPosition.x)
 		{
-			if ((currentPosition.x + 1.0f) < 800.0f)
+			if ((currentPosition.x + 1.0f) < 780.0f)
 			m_enemy.setPosition(currentPosition.x + 1.0f, currentPosition.y);
 		}
 		else
 		{
-			if ((currentPosition.x + 1.0f) > 0.0f)
+			if ((currentPosition.x + 1.0f) > 20.0f)
 			m_enemy.setPosition(currentPosition.x - 1.0f, currentPosition.y);
 		}
 	}
@@ -184,12 +184,12 @@ void Game::moveEnemy()
 	{
 		if (m_player.getPosition().x > currentPosition.x)
 		{
-			if ((currentPosition.x + 1.0f) > 0.0f)
+			if ((currentPosition.x + 1.0f) > 20.0f)
 			m_enemy.setPosition(currentPosition.x - 1.0f, currentPosition.y);
 		}
 		else
 		{
-			if ((currentPosition.x + 1.0f) < 800.0f)
+			if ((currentPosition.x + 1.0f) < 780.0f)
 			m_enemy.setPosition(currentPosition.x + 1.0f, currentPosition.y);
 		}
 	}
@@ -202,8 +202,6 @@ bool Game::checkCollision(sf::CircleShape t_circleOne, sf::CircleShape t_CircleT
 	std::cout << "d:" << distance << " r:" << radiusSum << "\n";
 	if (radiusSum >= distance)
 	{
-		m_score += 10;
-		m_bitsCount--;
 		return true;
 	}
 	else
@@ -215,6 +213,13 @@ void Game::update(double dt)
 {
 	movePlayer();
 	moveEnemy();
+	if (checkCollision(m_player, m_enemy))
+	{
+		if (m_isPoweredUp)
+		{
+			//something something
+		}
+	}
 	for (int i = 0; i < 20; i++)
 	{
 		if (checkCollision(m_player, m_bitArray[i]))
@@ -225,6 +230,8 @@ void Game::update(double dt)
 				m_powerTimer = 300;
 				m_isPoweredUp = true;
 			}
+			m_score += 10;
+			m_bitsCount--;
 		}
 	}
 	std::string updateScore = "Score: " + std::to_string(m_score);
