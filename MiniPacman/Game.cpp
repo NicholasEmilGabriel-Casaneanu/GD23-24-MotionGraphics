@@ -132,6 +132,10 @@ void Game::processGameEvents(sf::Event& event)
 void Game::movePlayer()
 {
 	sf::Vector2f currentPosition = m_player.getPosition();
+	if (currentPosition.x <= -40)
+		currentPosition.x = 840;
+	else if (currentPosition.x >= 840)
+		currentPosition.x = -40;
 	if (m_isFacingRight)
 	{
 		m_player.setPosition(currentPosition.x + 1, currentPosition.y);
