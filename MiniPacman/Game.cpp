@@ -27,6 +27,12 @@ void Game::init()
 	m_player.setOrigin(20.0f, 20.0f);
 	m_player.setFillColor(sf::Color::Yellow);
 	m_player.setPosition(50.0f, 100.0f);
+
+	m_enemy.setRadius(20.0f);
+	m_enemy.setOrigin(20.0f,20.0f);
+	m_enemy.setFillColor(sf::Color::Red);
+	m_enemy.setPosition(750.0f, 100.0f);
+
 	//ROLL FOR BIGBIT
 	m_bigBitIndex = rand() % 20;
 	for (int i = 0; i < 20; i++)
@@ -150,11 +156,42 @@ void Game::movePlayer()
 		currentPosition.x = -40;
 	if (m_isFacingRight)
 	{
-		m_player.setPosition(currentPosition.x + 1, currentPosition.y);
+		m_player.setPosition(currentPosition.x + 1.5f, currentPosition.y);
 	}
 	else
 	{
-		m_player.setPosition(currentPosition.x - 1, currentPosition.y);
+		m_player.setPosition(currentPosition.x - 1.5f, currentPosition.y);
+	}
+}
+
+void Game::moveEnemy()
+{
+	sf::Vector2f currentPosition = m_enemy.getPosition();
+	if(!m_isPoweredUp)
+	{
+		if (m_player.getPosition().x > currentPosition.x)
+		{
+			if ((currentPosition.x + 1.0f) < 800.0f)
+			m_enemy.setPosition(currentPosition.x + 1.0f, currentPosition.y);
+		}
+		else
+		{
+			if ((currentPosition.x + 1.0f) > 0.0f)
+			m_enemy.setPosition(currentPosition.x - 1.0f, currentPosition.y);
+		}
+	}
+	else
+	{
+		if (m_player.getPosition().x > currentPosition.x)
+		{
+			if ((currentPosition.x + 1.0f) > 0.0f)
+			m_enemy.setPosition(currentPosition.x - 1.0f, currentPosition.y);
+		}
+		else
+		{
+			if ((currentPosition.x + 1.0f) < 800.0f)
+			m_enemy.setPosition(currentPosition.x + 1.0f, currentPosition.y);
+		}
 	}
 }
 
@@ -177,6 +214,7 @@ bool Game::checkCollision(sf::CircleShape t_circleOne, sf::CircleShape t_CircleT
 void Game::update(double dt)
 {
 	movePlayer();
+	moveEnemy();
 	for (int i = 0; i < 20; i++)
 	{
 		if (checkCollision(m_player, m_bitArray[i]))
@@ -217,7 +255,10 @@ void Game::update(double dt)
 	if (m_powerTimer < 0)
 		m_powerTimer = 0;
 	if(m_powerTimer == 0)
+	{
 		m_player.setFillColor(sf::Color::Yellow);
+		m_isPoweredUp = false;
+	}
 }
 
 ////////////////////////////////////////////////////////////
@@ -230,6 +271,7 @@ void Game::render()
 	{
 		m_window.draw(m_bitArray[i]);
 	}
+	m_window.draw(m_enemy);
 	m_window.draw(m_scoreText);
 #ifdef TEST_FPS
 	m_window.draw(x_updateFPS);

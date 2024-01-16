@@ -93,8 +93,11 @@ protected:
 	sf::CircleShape m_bitArray[20];
 	int m_bitsCount = 0;
 	int m_bigBitIndex = 0;
+
+	sf::CircleShape m_enemy;
 	
 	void movePlayer();
+	void moveEnemy();
 	bool checkCollision(sf::CircleShape t_circleOne, sf::CircleShape t_CircleTwo);
 
 #ifdef TEST_FPS
