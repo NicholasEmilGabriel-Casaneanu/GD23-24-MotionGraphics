@@ -180,7 +180,14 @@ void Game::update(double dt)
 	for (int i = 0; i < 20; i++)
 	{
 		if (checkCollision(m_player, m_bitArray[i]))
+		{
 			m_bitArray[i].setPosition(-100.0f, -100.0f);
+			if (i == m_bigBitIndex)
+			{
+				m_powerTimer = 300;
+				m_isPoweredUp = true;
+			}
+		}
 	}
 	std::string updateScore = "Score: " + std::to_string(m_score);
 	m_scoreText.setString(updateScore);
@@ -192,7 +199,7 @@ void Game::update(double dt)
 			m_bitArray[i].setRadius(5.0f);
 			m_bitArray[i].setOrigin(5.0f, 5.0f);
 			m_bitArray[i].setFillColor(sf::Color::White);
-			m_bitArray[i].setPosition(20.0f + (i * 35), 100.0f);
+			m_bitArray[i].setPosition(20.0f + (i * 40), 100.0f);
 			if (i == m_bigBitIndex)
 			{
 				m_bitArray[i].setRadius(10.0f);
@@ -202,6 +209,15 @@ void Game::update(double dt)
 
 		m_bitsCount = 20;
 	}
+	if (m_isPoweredUp) m_player.setFillColor(sf::Color::Green);
+	else m_player.setFillColor(sf::Color::Yellow);
+
+	if(m_powerTimer>0)
+		m_powerTimer--;
+	if (m_powerTimer < 0)
+		m_powerTimer = 0;
+	if(m_powerTimer == 0)
+		m_player.setFillColor(sf::Color::Yellow);
 }
 
 ////////////////////////////////////////////////////////////

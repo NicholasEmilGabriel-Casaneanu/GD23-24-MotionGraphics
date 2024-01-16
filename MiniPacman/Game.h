@@ -87,6 +87,8 @@ protected:
 	sf::Text m_scoreText;
 	sf::CircleShape m_player;
 	bool m_isFacingRight = true;
+	int m_powerTimer = 0;
+	bool m_isPoweredUp = false;
 
 	sf::CircleShape m_bitArray[20];
 	int m_bitsCount = 0;
