@@ -83,10 +83,12 @@ protected:
 	// main window
 	sf::RenderWindow m_window;
 
+	int m_score = 0;
+	sf::Text m_scoreText;
 	sf::CircleShape m_player;
 	bool m_isFacingRight = true;
 
-	sf::CircleShape m_bitArray[30];
+	sf::CircleShape m_bitArray[20];
 	
 	void movePlayer();
 	bool checkCollision(sf::CircleShape t_circleOne, sf::CircleShape t_CircleTwo);

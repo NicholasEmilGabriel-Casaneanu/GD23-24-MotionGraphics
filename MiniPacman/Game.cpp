@@ -28,13 +28,18 @@ void Game::init()
 	m_player.setFillColor(sf::Color::Yellow);
 	m_player.setPosition(50.0f, 100.0f);
 
-	for (int i = 0; i < 30; i++)
+	for (int i = 0; i < 20; i++)
 	{
 		m_bitArray[i].setRadius(5.0f);
 		m_bitArray[i].setOrigin(5.0f, 5.0f);
 		m_bitArray[i].setFillColor(sf::Color::White);
-		m_bitArray[i].setPosition(100.0f + (i * 20), 100.0f);
+		m_bitArray[i].setPosition(100.0f + (i * 35), 100.0f);
 	}
+
+	m_scoreText.setFont(m_arialFont);
+	m_scoreText.setPosition(20, 20);
+	m_scoreText.setCharacterSize(24);
+	m_scoreText.setFillColor(sf::Color::White);
 
 
 #ifdef TEST_FPS
@@ -152,7 +157,10 @@ bool Game::checkCollision(sf::CircleShape t_circleOne, sf::CircleShape t_CircleT
 	float radiusSum = t_circleOne.getRadius() + t_CircleTwo.getRadius();
 	std::cout << "d:" << distance << " r:" << radiusSum << "\n";
 	if (radiusSum >= distance)
+	{
+		m_score += 10;
 		return true;
+	}
 	else
 		return false;
 }
@@ -161,11 +169,13 @@ bool Game::checkCollision(sf::CircleShape t_circleOne, sf::CircleShape t_CircleT
 void Game::update(double dt)
 {
 	movePlayer();
-	for (int i = 0; i < 30; i++)
+	for (int i = 0; i < 20; i++)
 	{
 		if (checkCollision(m_player, m_bitArray[i]))
-			m_bitArray[i].setPosition(-50.0f, -50.0f);
+			m_bitArray[i].setPosition(-100.0f, -100.0f);
 	}
+	std::string updateScore = "Score: " + std::to_string(m_score);
+	m_scoreText.setString(updateScore);
 }
 
 ////////////////////////////////////////////////////////////
@@ -174,10 +184,11 @@ void Game::render()
 	m_window.clear(sf::Color(0, 0, 0, 0));
 
 	m_window.draw(m_player);
-	for (int i = 0; i < 30; i++)
+	for (int i = 0; i < 20; i++)
 	{
 		m_window.draw(m_bitArray[i]);
 	}
+	m_window.draw(m_scoreText);
 #ifdef TEST_FPS
 	m_window.draw(x_updateFPS);
 	m_window.draw(x_drawFPS);
