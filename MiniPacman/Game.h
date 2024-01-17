@@ -89,6 +89,7 @@ protected:
 	sf::Text m_hiScoreText;
 
 	bool m_isSpacePressed = false;
+	bool m_isPaused = false;
 
 	sf::CircleShape m_player;
 	bool m_isFacingRight = true;

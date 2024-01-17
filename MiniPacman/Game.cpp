@@ -23,6 +23,8 @@ void Game::init()
 		std::cout << "Error loading font file";
 	}
 
+	m_isPaused = true;
+
 	m_player.setRadius(20.0f);
 	m_player.setOrigin(20.0f, 20.0f);
 	m_player.setFillColor(sf::Color::Yellow);
@@ -152,7 +154,14 @@ void Game::processGameEvents(sf::Event& event)
 			std::cout << "Spacebar Pressed\n";
 			if(!m_isSpacePressed)
 			{
-				m_isFacingRight = !m_isFacingRight;
+				if (m_isPaused)
+				{
+					m_isPaused = false;
+				}
+				else
+				{
+					m_isFacingRight = !m_isFacingRight;
+				}
 				m_isSpacePressed = true;
 			}
 			break;
@@ -250,82 +259,85 @@ void Game::spawnEnemy()
 ////////////////////////////////////////////////////////////
 void Game::update(double dt)
 {
-	std::string updateScore = "Score: " + std::to_string(m_score);
-	m_scoreText.setString(updateScore);
-	if (m_score > m_hiScore)
-		m_hiScore = m_score;
-	std::string updateHiScore = "HighScore: " + std::to_string(m_hiScore);
-	m_hiScoreText.setString(updateHiScore);
+	if(!m_isPaused)
+	{
+		std::string updateScore = "Score: " + std::to_string(m_score);
+		m_scoreText.setString(updateScore);
+		if (m_score > m_hiScore)
+			m_hiScore = m_score;
+		std::string updateHiScore = "HighScore: " + std::to_string(m_hiScore);
+		m_hiScoreText.setString(updateHiScore);
 
-	movePlayer();
-	if(m_isEnemyAlive)
-		moveEnemy();
-	if (checkCollision(m_player, m_enemy))
-	{
-		if (m_isPoweredUp)
-		{
-			m_isEnemyAlive = false;
-			m_enemy.setPosition(-200.0f, -200.0f);
-			m_enemyTimer = 300;
-		}
-		else
-		{
-			init();
-		}
-	}
-	for (int i = 0; i < 20; i++)
-	{
-		if (checkCollision(m_player, m_bitArray[i]))
-		{
-			m_bitArray[i].setPosition(-100.0f, -100.0f);
-			if (i == m_bigBitIndex)
-			{
-				m_powerTimer = 300;
-				m_isPoweredUp = true;
-			}
-			m_score += 10;
-			m_bitsCount--;
-		}
-	}
-	if(m_bitsCount <= 0)
-	{
-		m_bigBitIndex = rand() % 20;
+		movePlayer();
+		if (m_isEnemyAlive)
+			moveEnemy();
 		for (int i = 0; i < 20; i++)
 		{
-			m_bitArray[i].setRadius(5.0f);
-			m_bitArray[i].setOrigin(5.0f, 5.0f);
-			m_bitArray[i].setFillColor(sf::Color::White);
-			m_bitArray[i].setPosition(20.0f + (i * 40), 100.0f);
-			if (i == m_bigBitIndex)
+			if (checkCollision(m_player, m_bitArray[i]))
 			{
-				m_bitArray[i].setRadius(10.0f);
-				m_bitArray[i].setOrigin(10.0f, 10.0f);
+				m_bitArray[i].setPosition(-100.0f, -100.0f);
+				if (i == m_bigBitIndex)
+				{
+					m_powerTimer = 300;
+					m_isPoweredUp = true;
+				}
+				m_score += 10;
+				m_bitsCount--;
 			}
 		}
+		if (m_bitsCount <= 0)
+		{
+			m_bigBitIndex = rand() % 20;
+			for (int i = 0; i < 20; i++)
+			{
+				m_bitArray[i].setRadius(5.0f);
+				m_bitArray[i].setOrigin(5.0f, 5.0f);
+				m_bitArray[i].setFillColor(sf::Color::White);
+				m_bitArray[i].setPosition(20.0f + (i * 40), 100.0f);
+				if (i == m_bigBitIndex)
+				{
+					m_bitArray[i].setRadius(10.0f);
+					m_bitArray[i].setOrigin(10.0f, 10.0f);
+				}
+			}
 
-		m_bitsCount = 20;
-	}
-	if (m_isPoweredUp) m_player.setFillColor(sf::Color::Green);
-	else m_player.setFillColor(sf::Color::Yellow);
+			m_bitsCount = 20;
+		}
+		if (checkCollision(m_player, m_enemy))
+		{
+			if (m_isPoweredUp)
+			{
+				m_isEnemyAlive = false;
+				m_enemy.setPosition(-200.0f, -200.0f);
+				m_enemyTimer = 300;
+			}
+			else
+			{
+				init();
+			}
+		}
+		if (m_isPoweredUp) m_player.setFillColor(sf::Color::Green);
+		else m_player.setFillColor(sf::Color::Yellow);
 
-	if(m_powerTimer>0)
-		m_powerTimer--;
-	if (m_powerTimer < 0)
-		m_powerTimer = 0;
-	if(m_powerTimer == 0)
-	{
-		m_player.setFillColor(sf::Color::Yellow);
-		m_isPoweredUp = false;
-	}
+		if (m_powerTimer > 0)
+			m_powerTimer--;
+		if (m_powerTimer < 0)
+			m_powerTimer = 0;
+		if (m_powerTimer == 0)
+		{
+			m_player.setFillColor(sf::Color::Yellow);
+			m_isPoweredUp = false;
+		}
 
-	if (m_enemyTimer > 0)
-		m_enemyTimer--;
-	if (m_enemyTimer < 0)
-		m_enemyTimer = 0;
-	if (m_enemyTimer == 0 && !m_isEnemyAlive)
-	{
-		spawnEnemy();
-		m_isEnemyAlive = true;
+		if (m_enemyTimer > 0)
+			m_enemyTimer--;
+		if (m_enemyTimer < 0)
+			m_enemyTimer = 0;
+		if (m_enemyTimer == 0 && !m_isEnemyAlive)
+		{
+			spawnEnemy();
+			m_isEnemyAlive = true;
+		}
 	}
 }
 
