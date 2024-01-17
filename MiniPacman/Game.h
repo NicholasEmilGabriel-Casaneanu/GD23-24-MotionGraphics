@@ -87,6 +87,7 @@ protected:
 	sf::Text m_scoreText;
 	int m_hiScore = 0;
 	sf::Text m_hiScoreText;
+	sf::Text m_centerText;
 
 	bool m_isSpacePressed = false;
 	bool m_isPaused = false;
@@ -95,6 +96,7 @@ protected:
 	bool m_isFacingRight = true;
 	int m_powerTimer = 0;
 	bool m_isPoweredUp = false;
+	bool m_isPlayerAlive = true;
 
 	sf::CircleShape m_bitArray[20];
 	int m_bitsCount = 0;

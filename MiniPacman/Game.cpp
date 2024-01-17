@@ -29,6 +29,7 @@ void Game::init()
 	m_player.setOrigin(20.0f, 20.0f);
 	m_player.setFillColor(sf::Color::Yellow);
 	m_player.setPosition(50.0f, 100.0f);
+	m_isPlayerAlive = true;
 
 	m_enemy.setRadius(20.0f);
 	m_enemy.setOrigin(20.0f,20.0f);
@@ -62,6 +63,11 @@ void Game::init()
 	m_hiScoreText.setPosition(660, 20);
 	m_hiScoreText.setCharacterSize(24);
 	m_hiScoreText.setFillColor(sf::Color::White);
+
+	m_centerText.setFont(m_arialFont);
+	m_centerText.setPosition(20.0f, 200.0f);
+	m_centerText.setCharacterSize(24);
+	m_centerText.setFillColor(sf::Color::White);
 
 
 #ifdef TEST_FPS
@@ -154,7 +160,11 @@ void Game::processGameEvents(sf::Event& event)
 			std::cout << "Spacebar Pressed\n";
 			if(!m_isSpacePressed)
 			{
-				if (m_isPaused)
+				if (m_isPaused && !m_isPlayerAlive)
+				{
+					init();
+				}
+				else if (m_isPaused)
 				{
 					m_isPaused = false;
 				}
@@ -313,7 +323,8 @@ void Game::update(double dt)
 			}
 			else
 			{
-				init();
+				m_isPaused = true;
+				m_isPlayerAlive = false;
 			}
 		}
 		if (m_isPoweredUp) m_player.setFillColor(sf::Color::Green);
@@ -338,6 +349,17 @@ void Game::update(double dt)
 			spawnEnemy();
 			m_isEnemyAlive = true;
 		}
+		
+	}
+	if (m_isPlayerAlive)
+	{
+		std::string centerText = "Game is Paused, Press Space to Start";
+		m_centerText.setString(centerText);
+	}
+	else
+	{
+		std::string centerText = "Game Over, Press Space to Restart";
+		m_centerText.setString(centerText);
 	}
 }
 
@@ -354,6 +376,10 @@ void Game::render()
 	m_window.draw(m_enemy);
 	m_window.draw(m_scoreText);
 	m_window.draw(m_hiScoreText);
+	if (m_isPaused)
+	{
+		m_window.draw(m_centerText);
+	}
 #ifdef TEST_FPS
 	m_window.draw(x_updateFPS);
 	m_window.draw(x_drawFPS);
