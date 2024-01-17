@@ -205,11 +205,11 @@ void Game::movePlayer()
 		currentPosition.x = -40;
 	if (m_isFacingRight)
 	{
-		m_player.setPosition(currentPosition.x + 1.5f, currentPosition.y);
+		m_player.setPosition(currentPosition.x + 3.0f, currentPosition.y);
 	}
 	else
 	{
-		m_player.setPosition(currentPosition.x - 1.5f, currentPosition.y);
+		m_player.setPosition(currentPosition.x - 3.0f, currentPosition.y);
 	}
 }
 
@@ -220,26 +220,26 @@ void Game::moveEnemy()
 	{
 		if (m_player.getPosition().x > currentPosition.x)
 		{
-			if ((currentPosition.x + 1.0f) < 780.0f)
-			m_enemy.setPosition(currentPosition.x + (1.0f * m_enemySpeedFactor), currentPosition.y);
+			if ((currentPosition.x + (2.0f * m_enemySpeedFactor)) < 780.0f)
+			m_enemy.setPosition(currentPosition.x + (2.0f * m_enemySpeedFactor), currentPosition.y);
 		}
 		else
 		{
-			if ((currentPosition.x + 1.0f) > 20.0f)
-			m_enemy.setPosition(currentPosition.x - (1.0f * m_enemySpeedFactor), currentPosition.y);
+			if ((currentPosition.x + (2.0f * m_enemySpeedFactor)) > 20.0f)
+			m_enemy.setPosition(currentPosition.x - (2.0f * m_enemySpeedFactor), currentPosition.y);
 		}
 	}
 	else
 	{
 		if (m_player.getPosition().x > currentPosition.x)
 		{
-			if ((currentPosition.x + 1.0f) > 20.0f)
-			m_enemy.setPosition(currentPosition.x - (1.0f * m_enemySpeedFactor), currentPosition.y);
+			if ((currentPosition.x + (2.0f * m_enemySpeedFactor)) > 20.0f)
+			m_enemy.setPosition(currentPosition.x - (2.0f * m_enemySpeedFactor), currentPosition.y);
 		}
 		else
 		{
-			if ((currentPosition.x + 1.0f) < 780.0f)
-			m_enemy.setPosition(currentPosition.x + (1.0f * m_enemySpeedFactor), currentPosition.y);
+			if ((currentPosition.x + (2.0f * m_enemySpeedFactor)) < 780.0f)
+			m_enemy.setPosition(currentPosition.x + (2.0f * m_enemySpeedFactor), currentPosition.y);
 		}
 	}
 }
@@ -315,10 +315,10 @@ void Game::update(double dt)
 			m_bitsCount = 20;
 		}
 		if (m_isPoweredUp) {
-			m_enemySpeedFactor = 1.0f;
+			m_enemySpeedFactor = 2.0f;
 		}
 		else
-			m_enemySpeedFactor = 1.0f + (m_score / 1000.0f);
+			m_enemySpeedFactor = 2.0f + (m_score / 1000.0f);
 		if (checkCollision(m_player, m_enemy))
 		{
 			if (m_isPoweredUp)
