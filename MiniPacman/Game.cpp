@@ -35,6 +35,7 @@ void Game::init()
 	m_enemy.setOrigin(20.0f,20.0f);
 	m_enemy.setFillColor(sf::Color::Red);
 	m_enemy.setPosition(750.0f, 100.0f);
+	m_enemySpeedFactor = 1.0f;
 	m_isEnemyAlive = true;
 
 	//ROLL FOR BIGBIT
@@ -220,12 +221,12 @@ void Game::moveEnemy()
 		if (m_player.getPosition().x > currentPosition.x)
 		{
 			if ((currentPosition.x + 1.0f) < 780.0f)
-			m_enemy.setPosition(currentPosition.x + 1.0f, currentPosition.y);
+			m_enemy.setPosition(currentPosition.x + (1.0f * m_enemySpeedFactor), currentPosition.y);
 		}
 		else
 		{
 			if ((currentPosition.x + 1.0f) > 20.0f)
-			m_enemy.setPosition(currentPosition.x - 1.0f, currentPosition.y);
+			m_enemy.setPosition(currentPosition.x - (1.0f * m_enemySpeedFactor), currentPosition.y);
 		}
 	}
 	else
@@ -233,12 +234,12 @@ void Game::moveEnemy()
 		if (m_player.getPosition().x > currentPosition.x)
 		{
 			if ((currentPosition.x + 1.0f) > 20.0f)
-			m_enemy.setPosition(currentPosition.x - 1.0f, currentPosition.y);
+			m_enemy.setPosition(currentPosition.x - (1.0f * m_enemySpeedFactor), currentPosition.y);
 		}
 		else
 		{
 			if ((currentPosition.x + 1.0f) < 780.0f)
-			m_enemy.setPosition(currentPosition.x + 1.0f, currentPosition.y);
+			m_enemy.setPosition(currentPosition.x + (1.0f * m_enemySpeedFactor), currentPosition.y);
 		}
 	}
 }
@@ -247,7 +248,7 @@ bool Game::checkCollision(sf::CircleShape t_circleOne, sf::CircleShape t_CircleT
 {
 	float distance = std::abs(t_circleOne.getPosition().x - t_CircleTwo.getPosition().x);
 	float radiusSum = t_circleOne.getRadius() + t_CircleTwo.getRadius();
-	std::cout << "d:" << distance << " r:" << radiusSum << "\n";
+	//std::cout << "d:" << distance << " r:" << radiusSum << "\n";
 	if (radiusSum >= distance)
 	{
 		return true;
@@ -313,6 +314,11 @@ void Game::update(double dt)
 
 			m_bitsCount = 20;
 		}
+		if (m_isPoweredUp) {
+			m_enemySpeedFactor = 1.0f;
+		}
+		else
+			m_enemySpeedFactor = 1.0f + (m_score / 1000.0f);
 		if (checkCollision(m_player, m_enemy))
 		{
 			if (m_isPoweredUp)

@@ -105,6 +105,7 @@ protected:
 	sf::CircleShape m_enemy;
 	int m_enemyTimer = 0;
 	bool m_isEnemyAlive = false;
+	float m_enemySpeedFactor = 1.0f;
 	
 	void movePlayer();
 	void moveEnemy();
