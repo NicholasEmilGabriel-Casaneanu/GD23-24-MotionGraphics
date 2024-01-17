@@ -85,6 +85,8 @@ protected:
 
 	int m_score = 0;
 	sf::Text m_scoreText;
+	int m_hiScore = 0;
+	sf::Text m_hiScoreText;
 
 	sf::CircleShape m_player;
 	bool m_isFacingRight = true;

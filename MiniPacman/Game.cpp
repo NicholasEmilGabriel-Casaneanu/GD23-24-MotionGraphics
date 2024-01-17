@@ -28,8 +28,6 @@ void Game::init()
 	m_player.setFillColor(sf::Color::Yellow);
 	m_player.setPosition(50.0f, 100.0f);
 
-	m_score = 0;
-
 	m_enemy.setRadius(20.0f);
 	m_enemy.setOrigin(20.0f,20.0f);
 	m_enemy.setFillColor(sf::Color::Red);
@@ -52,10 +50,16 @@ void Game::init()
 	}
 	m_bitsCount = 20;
 
+	m_score = 0;
 	m_scoreText.setFont(m_arialFont);
 	m_scoreText.setPosition(20, 20);
 	m_scoreText.setCharacterSize(24);
 	m_scoreText.setFillColor(sf::Color::White);
+
+	m_hiScoreText.setFont(m_arialFont);
+	m_hiScoreText.setPosition(660, 20);
+	m_hiScoreText.setCharacterSize(24);
+	m_hiScoreText.setFillColor(sf::Color::White);
 
 
 #ifdef TEST_FPS
@@ -215,15 +219,22 @@ void Game::spawnEnemy()
 {
 	if (m_player.getPosition().x >= 400)
 	{
-		m_enemy.setPosition(20.0f, 100.0f);
+		m_enemy.setPosition(50.0f, 100.0f);
 	}
 	else
-		m_enemy.setPosition(780.0f, 100.0f);
+		m_enemy.setPosition(750.0f, 100.0f);
 }
 
 ////////////////////////////////////////////////////////////
 void Game::update(double dt)
 {
+	std::string updateScore = "Score: " + std::to_string(m_score);
+	m_scoreText.setString(updateScore);
+	if (m_score > m_hiScore)
+		m_hiScore = m_score;
+	std::string updateHiScore = "HighScore: " + std::to_string(m_hiScore);
+	m_hiScoreText.setString(updateHiScore);
+
 	movePlayer();
 	if(m_isEnemyAlive)
 		moveEnemy();
@@ -254,8 +265,6 @@ void Game::update(double dt)
 			m_bitsCount--;
 		}
 	}
-	std::string updateScore = "Score: " + std::to_string(m_score);
-	m_scoreText.setString(updateScore);
 	if(m_bitsCount <= 0)
 	{
 		m_bigBitIndex = rand() % 20;
@@ -310,6 +319,7 @@ void Game::render()
 	}
 	m_window.draw(m_enemy);
 	m_window.draw(m_scoreText);
+	m_window.draw(m_hiScoreText);
 #ifdef TEST_FPS
 	m_window.draw(x_updateFPS);
 	m_window.draw(x_drawFPS);
