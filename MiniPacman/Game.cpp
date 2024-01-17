@@ -35,7 +35,7 @@ void Game::init()
 	m_enemy.setOrigin(20.0f,20.0f);
 	m_enemy.setFillColor(sf::Color::Red);
 	m_enemy.setPosition(750.0f, 100.0f);
-	m_enemySpeedFactor = 1.0f;
+	m_enemySpeedFactor = 1.5f;
 	m_isEnemyAlive = true;
 
 	//ROLL FOR BIGBIT
@@ -205,11 +205,11 @@ void Game::movePlayer()
 		currentPosition.x = -40;
 	if (m_isFacingRight)
 	{
-		m_player.setPosition(currentPosition.x + 3.0f, currentPosition.y);
+		m_player.setPosition(currentPosition.x + 2.5f, currentPosition.y);
 	}
 	else
 	{
-		m_player.setPosition(currentPosition.x - 3.0f, currentPosition.y);
+		m_player.setPosition(currentPosition.x - 2.5f, currentPosition.y);
 	}
 }
 
@@ -220,18 +220,43 @@ void Game::moveEnemy()
 	{
 		if (m_player.getPosition().x > currentPosition.x)
 		{
-			if ((currentPosition.x + (2.0f * m_enemySpeedFactor)) < 780.0f)
-			m_enemy.setPosition(currentPosition.x + (2.0f * m_enemySpeedFactor), currentPosition.y);
+			if ((currentPosition.x + (1.5f * m_enemySpeedFactor)) < 780.0f)
+			m_enemy.setPosition(currentPosition.x + (1.5f * m_enemySpeedFactor), currentPosition.y);
 		}
 		else
 		{
-			if ((currentPosition.x + (2.0f * m_enemySpeedFactor)) > 20.0f)
-			m_enemy.setPosition(currentPosition.x - (2.0f * m_enemySpeedFactor), currentPosition.y);
+			if ((currentPosition.x + (1.5f * m_enemySpeedFactor)) > 20.0f)
+			m_enemy.setPosition(currentPosition.x - (1.5f * m_enemySpeedFactor), currentPosition.y);
 		}
 	}
 	else
 	{
-		if (m_player.getPosition().x > currentPosition.x)
+
+		if (currentPosition.x <= -40.0f)
+			currentPosition.x = 840.0f;
+		else if (currentPosition.x >= 840.0f)
+			currentPosition.x = -40.0f;
+
+		float distance = m_player.getPosition().x - m_enemy.getPosition().x;
+		float distanceABS = std::abs(m_player.getPosition().x - m_enemy.getPosition().x);
+		std::cout << distance << "\n";
+		float leftThershold = 0.0f;
+		float rightThreshold = 0.0f;
+		if (distance >= 0.0f)
+		{
+			if(distanceABS >= 400.0f)
+				m_enemy.setPosition(currentPosition.x + (1.5f * m_enemySpeedFactor), currentPosition.y);
+			else
+				m_enemy.setPosition(currentPosition.x - (1.5f * m_enemySpeedFactor), currentPosition.y);
+		}
+		else
+		{
+			if (distanceABS >= 400.0f)
+				m_enemy.setPosition(currentPosition.x - (1.5f * m_enemySpeedFactor), currentPosition.y);
+			else
+				m_enemy.setPosition(currentPosition.x + (1.5f * m_enemySpeedFactor), currentPosition.y);
+		}
+		/*if (m_player.getPosition().x > currentPosition.x)
 		{
 			if ((currentPosition.x + (2.0f * m_enemySpeedFactor)) > 20.0f)
 			m_enemy.setPosition(currentPosition.x - (2.0f * m_enemySpeedFactor), currentPosition.y);
@@ -240,7 +265,7 @@ void Game::moveEnemy()
 		{
 			if ((currentPosition.x + (2.0f * m_enemySpeedFactor)) < 780.0f)
 			m_enemy.setPosition(currentPosition.x + (2.0f * m_enemySpeedFactor), currentPosition.y);
-		}
+		}*/
 	}
 }
 
@@ -315,10 +340,10 @@ void Game::update(double dt)
 			m_bitsCount = 20;
 		}
 		if (m_isPoweredUp) {
-			m_enemySpeedFactor = 2.0f;
+			m_enemySpeedFactor = 0.75f;
 		}
 		else
-			m_enemySpeedFactor = 2.0f + (m_score / 1000.0f);
+			m_enemySpeedFactor = 1.5f + (m_score / 2000.0f);
 		if (checkCollision(m_player, m_enemy))
 		{
 			if (m_isPoweredUp)
