@@ -85,6 +85,7 @@ protected:
 
 	int m_score = 0;
 	sf::Text m_scoreText;
+
 	sf::CircleShape m_player;
 	bool m_isFacingRight = true;
 	int m_powerTimer = 0;
@@ -95,10 +96,13 @@ protected:
 	int m_bigBitIndex = 0;
 
 	sf::CircleShape m_enemy;
+	int m_enemyTimer = 0;
+	bool m_isEnemyAlive = false;
 	
 	void movePlayer();
 	void moveEnemy();
 	bool checkCollision(sf::CircleShape t_circleOne, sf::CircleShape t_CircleTwo);
+	void spawnEnemy();
 
 #ifdef TEST_FPS
 	sf::Text x_updateFPS;					// text used to display updates per second.

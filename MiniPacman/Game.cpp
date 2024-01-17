@@ -28,10 +28,13 @@ void Game::init()
 	m_player.setFillColor(sf::Color::Yellow);
 	m_player.setPosition(50.0f, 100.0f);
 
+	m_score = 0;
+
 	m_enemy.setRadius(20.0f);
 	m_enemy.setOrigin(20.0f,20.0f);
 	m_enemy.setFillColor(sf::Color::Red);
 	m_enemy.setPosition(750.0f, 100.0f);
+	m_isEnemyAlive = true;
 
 	//ROLL FOR BIGBIT
 	m_bigBitIndex = rand() % 20;
@@ -208,16 +211,33 @@ bool Game::checkCollision(sf::CircleShape t_circleOne, sf::CircleShape t_CircleT
 		return false;
 }
 
+void Game::spawnEnemy()
+{
+	if (m_player.getPosition().x >= 400)
+	{
+		m_enemy.setPosition(20.0f, 100.0f);
+	}
+	else
+		m_enemy.setPosition(780.0f, 100.0f);
+}
+
 ////////////////////////////////////////////////////////////
 void Game::update(double dt)
 {
 	movePlayer();
-	moveEnemy();
+	if(m_isEnemyAlive)
+		moveEnemy();
 	if (checkCollision(m_player, m_enemy))
 	{
 		if (m_isPoweredUp)
 		{
-			//something something
+			m_isEnemyAlive = false;
+			m_enemy.setPosition(-200.0f, -200.0f);
+			m_enemyTimer = 300;
+		}
+		else
+		{
+			init();
 		}
 	}
 	for (int i = 0; i < 20; i++)
@@ -265,6 +285,16 @@ void Game::update(double dt)
 	{
 		m_player.setFillColor(sf::Color::Yellow);
 		m_isPoweredUp = false;
+	}
+
+	if (m_enemyTimer > 0)
+		m_enemyTimer--;
+	if (m_enemyTimer < 0)
+		m_enemyTimer = 0;
+	if (m_enemyTimer == 0 && !m_isEnemyAlive)
+	{
+		spawnEnemy();
+		m_isEnemyAlive = true;
 	}
 }
 
