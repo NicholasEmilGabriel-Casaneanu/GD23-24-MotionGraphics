@@ -39,6 +39,7 @@ void Game::init()
 	m_isEnemyAlive = true;
 
 	//ROLL FOR BIGBIT
+	//bigbit gives player powerup
 	m_bigBitIndex = rand() % 20;
 	for (int i = 0; i < 20; i++)
 	{
@@ -218,6 +219,7 @@ void Game::moveEnemy()
 	sf::Vector2f currentPosition = m_enemy.getPosition();
 	if(!m_isPoweredUp)
 	{
+		// Follow player as usual, speed affected by current score (speedfactor increases in update function)
 		if (m_player.getPosition().x > currentPosition.x)
 		{
 			if ((currentPosition.x + (1.5f * m_enemySpeedFactor)) < 780.0f)
@@ -231,7 +233,7 @@ void Game::moveEnemy()
 	}
 	else
 	{
-
+		// When enemy is running away, he can screen warp too, and will try to keep an even distance to the player
 		if (currentPosition.x <= -40.0f)
 			currentPosition.x = 840.0f;
 		else if (currentPosition.x >= 840.0f)
@@ -269,6 +271,7 @@ void Game::moveEnemy()
 	}
 }
 
+// Circle to circle collision detection
 bool Game::checkCollision(sf::CircleShape t_circleOne, sf::CircleShape t_CircleTwo)
 {
 	float distance = std::abs(t_circleOne.getPosition().x - t_CircleTwo.getPosition().x);
@@ -282,6 +285,7 @@ bool Game::checkCollision(sf::CircleShape t_circleOne, sf::CircleShape t_CircleT
 		return false;
 }
 
+// Spawn enemy near the edges of the screen , whichever is farthest from player
 void Game::spawnEnemy()
 {
 	if (m_player.getPosition().x >= 400)
@@ -297,6 +301,7 @@ void Game::update(double dt)
 {
 	if(!m_isPaused)
 	{
+		//Update Scores
 		std::string updateScore = "Score: " + std::to_string(m_score);
 		m_scoreText.setString(updateScore);
 		if (m_score > m_hiScore)
@@ -304,6 +309,7 @@ void Game::update(double dt)
 		std::string updateHiScore = "HighScore: " + std::to_string(m_hiScore);
 		m_hiScoreText.setString(updateHiScore);
 
+		//Player, Enemy, Collisions
 		movePlayer();
 		if (m_isEnemyAlive)
 			moveEnemy();
@@ -361,6 +367,7 @@ void Game::update(double dt)
 		if (m_isPoweredUp) m_player.setFillColor(sf::Color::Green);
 		else m_player.setFillColor(sf::Color::Yellow);
 
+		//PowerUp Timer
 		if (m_powerTimer > 0)
 			m_powerTimer--;
 		if (m_powerTimer < 0)
@@ -371,6 +378,7 @@ void Game::update(double dt)
 			m_isPoweredUp = false;
 		}
 
+		//Enemy Respawn Timer
 		if (m_enemyTimer > 0)
 			m_enemyTimer--;
 		if (m_enemyTimer < 0)
@@ -382,6 +390,8 @@ void Game::update(double dt)
 		}
 		
 	}
+
+	//When game paused (m_isPaused == true)
 	if (m_isPlayerAlive)
 	{
 		std::string centerText = "Game is Paused, Press Space to Start";
