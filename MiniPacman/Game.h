@@ -88,6 +88,8 @@ protected:
 	int m_hiScore = 0;
 	sf::Text m_hiScoreText;
 
+	bool m_isSpacePressed = false;
+
 	sf::CircleShape m_player;
 	bool m_isFacingRight = true;
 	int m_powerTimer = 0;

@@ -141,12 +141,34 @@ void Game::processGameEvents(sf::Event& event)
 			// Up key was pressed...
 			break;
 		case sf::Keyboard::Left:
-			std::cout << "key_left\n";
-			m_isFacingRight = false;
+			//std::cout << "key_left\n";
+			//m_isFacingRight = false;
 			break;
 		case sf::Keyboard::Right:
-			std::cout << "key_right\n";
-			m_isFacingRight = true;
+			//std::cout << "key_right\n";
+			//m_isFacingRight = true;
+			break;
+		case sf::Keyboard::Space:
+			std::cout << "Spacebar Pressed\n";
+			if(!m_isSpacePressed)
+			{
+				m_isFacingRight = !m_isFacingRight;
+				m_isSpacePressed = true;
+			}
+			break;
+		default:
+			break;
+		}
+	}
+
+	if (sf::Event::KeyReleased == event.type)
+	{
+		switch (event.key.code)
+		{
+		case sf::Keyboard::Space:
+			std::cout << "Spacebar Released\n";
+			if(m_isSpacePressed)
+				m_isSpacePressed = false;
 			break;
 		default:
 			break;
