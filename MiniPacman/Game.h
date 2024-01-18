@@ -87,6 +87,7 @@ protected:
 	sf::Text m_scoreText;
 	int m_hiScore = 0;
 	sf::Text m_hiScoreText;
+	sf::Text m_powerUpText;
 	sf::Text m_centerText;
 
 	bool m_isSpacePressed = false;

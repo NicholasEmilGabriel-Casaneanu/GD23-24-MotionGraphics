@@ -29,6 +29,7 @@ void Game::init()
 	m_player.setOrigin(20.0f, 20.0f);
 	m_player.setFillColor(sf::Color::Yellow);
 	m_player.setPosition(50.0f, 100.0f);
+	m_isFacingRight = true;
 	m_isPlayerAlive = true;
 
 	m_enemy.setRadius(20.0f);
@@ -65,6 +66,11 @@ void Game::init()
 	m_hiScoreText.setPosition(660, 20);
 	m_hiScoreText.setCharacterSize(24);
 	m_hiScoreText.setFillColor(sf::Color::White);
+
+	m_powerUpText.setFont(m_arialFont);
+	m_powerUpText.setPosition(140, 20);
+	m_powerUpText.setCharacterSize(24);
+	m_powerUpText.setFillColor(sf::Color::White);
 
 	m_centerText.setFont(m_arialFont);
 	m_centerText.setPosition(20.0f, 200.0f);
@@ -308,6 +314,10 @@ void Game::update(double dt)
 			m_hiScore = m_score;
 		std::string updateHiScore = "HighScore: " + std::to_string(m_hiScore);
 		m_hiScoreText.setString(updateHiScore);
+		std::string powerTimerString = std::to_string(m_powerTimer / 60.0f);
+		powerTimerString.resize(4);
+		std::string updatePowerTimer = "PowerUp: " + powerTimerString;
+		m_powerUpText.setString(updatePowerTimer);
 
 		//Player, Enemy, Collisions
 		movePlayer();
@@ -417,6 +427,10 @@ void Game::render()
 	m_window.draw(m_enemy);
 	m_window.draw(m_scoreText);
 	m_window.draw(m_hiScoreText);
+	if (m_isPoweredUp)
+	{
+		m_window.draw(m_powerUpText);
+	}
 	if (m_isPaused)
 	{
 		m_window.draw(m_centerText);
