@@ -90,6 +90,9 @@ protected:
 	sf::Text m_powerUpText;
 	sf::Text m_centerText;
 
+	sf::RectangleShape m_topBar;
+	sf::RectangleShape m_botBar;
+
 	bool m_isSpacePressed = false;
 	bool m_isPaused = false;
 

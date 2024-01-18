@@ -25,6 +25,14 @@ void Game::init()
 
 	m_isPaused = true;
 
+	m_topBar.setSize(sf::Vector2f(800.0f, 5.0f));
+	m_topBar.setFillColor(sf::Color::Magenta);
+	m_topBar.setPosition(0.0f, 75.0f);
+
+	m_botBar.setSize(sf::Vector2f(800.0f, 5.0f));
+	m_botBar.setFillColor(sf::Color::Magenta);
+	m_botBar.setPosition(0.0f, 120.0f);
+
 	m_player.setRadius(20.0f);
 	m_player.setOrigin(20.0f, 20.0f);
 	m_player.setFillColor(sf::Color::Yellow);
@@ -374,7 +382,11 @@ void Game::update(double dt)
 				m_isPlayerAlive = false;
 			}
 		}
-		if (m_isPoweredUp) m_player.setFillColor(sf::Color::Green);
+		if (m_isPoweredUp)
+		{
+			m_player.setFillColor(sf::Color::Green);
+			m_enemy.setFillColor(sf::Color::Blue);
+		}
 		else m_player.setFillColor(sf::Color::Yellow);
 
 		//PowerUp Timer
@@ -385,6 +397,7 @@ void Game::update(double dt)
 		if (m_powerTimer == 0)
 		{
 			m_player.setFillColor(sf::Color::Yellow);
+			m_enemy.setFillColor(sf::Color::Red);
 			m_isPoweredUp = false;
 		}
 
@@ -419,6 +432,8 @@ void Game::render()
 {
 	m_window.clear(sf::Color(0, 0, 0, 0));
 
+	m_window.draw(m_topBar);
+	m_window.draw(m_botBar);
 	m_window.draw(m_player);
 	for (int i = 0; i < 20; i++)
 	{
