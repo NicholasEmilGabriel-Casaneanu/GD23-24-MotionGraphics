@@ -92,6 +92,8 @@ protected:
 
 	sf::RectangleShape m_topBar;
 	sf::RectangleShape m_botBar;
+	sf::RectangleShape m_innerBox;
+	sf::RectangleShape m_outerBox;
 
 	bool m_isSpacePressed = false;
 	bool m_isPaused = false;

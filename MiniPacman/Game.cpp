@@ -33,6 +33,18 @@ void Game::init()
 	m_botBar.setFillColor(sf::Color::Magenta);
 	m_botBar.setPosition(0.0f, 120.0f);
 
+	m_innerBox.setOutlineThickness(5.0f);
+	m_innerBox.setPosition(145.0f, 125.0f);
+	m_innerBox.setOutlineColor(sf::Color::Magenta);
+	m_innerBox.setFillColor(sf::Color::Transparent);
+	m_innerBox.setSize(sf::Vector2f(500.0f, 200.0f));
+
+	m_outerBox.setOutlineThickness(5.0f);
+	m_outerBox.setPosition(100.0f, 80.0f);
+	m_outerBox.setOutlineColor(sf::Color::Magenta);
+	m_outerBox.setFillColor(sf::Color::Transparent);
+	m_outerBox.setSize(sf::Vector2f(590.0f, 290.0f));
+
 	m_player.setRadius(20.0f);
 	m_player.setOrigin(20.0f, 20.0f);
 	m_player.setFillColor(sf::Color::Yellow);
@@ -231,58 +243,89 @@ void Game::movePlayer()
 void Game::moveEnemy()
 {
 	sf::Vector2f currentPosition = m_enemy.getPosition();
-	if(!m_isPoweredUp)
+	if (!m_isPoweredUp)
 	{
-		// Follow player as usual, speed affected by current score (speedfactor increases in update function)
 		if (m_player.getPosition().x > currentPosition.x)
 		{
 			if ((currentPosition.x + (1.5f * m_enemySpeedFactor)) < 780.0f)
-			m_enemy.setPosition(currentPosition.x + (1.5f * m_enemySpeedFactor), currentPosition.y);
+				m_enemy.setPosition(currentPosition.x + (1.5f * m_enemySpeedFactor), currentPosition.y);
 		}
 		else
 		{
-			if ((currentPosition.x + (1.5f * m_enemySpeedFactor)) > 20.0f)
-			m_enemy.setPosition(currentPosition.x - (1.5f * m_enemySpeedFactor), currentPosition.y);
+			if ((currentPosition.x + (1.5f  * m_enemySpeedFactor)) > 20.0f)
+				m_enemy.setPosition(currentPosition.x - (1.5f * m_enemySpeedFactor), currentPosition.y);
 		}
 	}
 	else
 	{
-		// When enemy is running away, he can screen warp too, and will try to keep an even distance to the player
-		if (currentPosition.x <= -40.0f)
-			currentPosition.x = 840.0f;
-		else if (currentPosition.x >= 840.0f)
-			currentPosition.x = -40.0f;
-
-		float distance = m_player.getPosition().x - m_enemy.getPosition().x;
-		float distanceABS = std::abs(m_player.getPosition().x - m_enemy.getPosition().x);
-		std::cout << distance << "\n";
-		float leftThershold = 0.0f;
-		float rightThreshold = 0.0f;
-		if (distance >= 0.0f)
+		if (m_player.getPosition().x > currentPosition.x)
 		{
-			if(distanceABS >= 400.0f)
-				m_enemy.setPosition(currentPosition.x + (1.5f * m_enemySpeedFactor), currentPosition.y);
-			else
+			if ((currentPosition.x + (1.5f * m_enemySpeedFactor)) > 20.0f)
 				m_enemy.setPosition(currentPosition.x - (1.5f * m_enemySpeedFactor), currentPosition.y);
 		}
 		else
 		{
-			if (distanceABS >= 400.0f)
-				m_enemy.setPosition(currentPosition.x - (1.5f * m_enemySpeedFactor), currentPosition.y);
-			else
+			if ((currentPosition.x + (1.5f * m_enemySpeedFactor)) < 780.0f)
 				m_enemy.setPosition(currentPosition.x + (1.5f * m_enemySpeedFactor), currentPosition.y);
 		}
-		/*if (m_player.getPosition().x > currentPosition.x)
-		{
-			if ((currentPosition.x + (2.0f * m_enemySpeedFactor)) > 20.0f)
-			m_enemy.setPosition(currentPosition.x - (2.0f * m_enemySpeedFactor), currentPosition.y);
-		}
-		else
-		{
-			if ((currentPosition.x + (2.0f * m_enemySpeedFactor)) < 780.0f)
-			m_enemy.setPosition(currentPosition.x + (2.0f * m_enemySpeedFactor), currentPosition.y);
-		}*/
 	}
+	//if(!m_isPoweredUp)
+	//{
+	//	// Follow player as usual, speed affected by current score (speedfactor increases in update function)
+	//	if (m_player.getPosition().x > currentPosition.x)
+	//	{
+	//		if ((currentPosition.x + (1.5f * m_enemySpeedFactor)) < 780.0f)
+	//		m_enemy.setPosition(currentPosition.x + (1.5f * m_enemySpeedFactor), currentPosition.y);
+	//	}
+	//	else
+	//	{
+	//		if ((currentPosition.x + (1.5f * m_enemySpeedFactor)) > 20.0f)
+	//		m_enemy.setPosition(currentPosition.x - (1.5f * m_enemySpeedFactor), currentPosition.y);
+	//	}
+	//}
+	//else
+	//{
+	//	//Advanced Behaviour
+	//	//
+	//	//
+	//	//// When enemy is running away, he can screen warp too, and will try to keep an even distance to the player
+	//	//if (currentPosition.x <= -40.0f)
+	//	//	currentPosition.x = 840.0f;
+	//	//else if (currentPosition.x >= 840.0f)
+	//	//	currentPosition.x = -40.0f;
+
+	//	//float distance = m_player.getPosition().x - m_enemy.getPosition().x;
+	//	//float distanceABS = std::abs(m_player.getPosition().x - m_enemy.getPosition().x);
+	//	//std::cout << distance << "\n";
+	//	//float leftThershold = 0.0f;
+	//	//float rightThreshold = 0.0f;
+	//	//if (distance >= 0.0f)
+	//	//{
+	//	//	if(distanceABS >= 400.0f)
+	//	//		m_enemy.setPosition(currentPosition.x + (1.5f * m_enemySpeedFactor), currentPosition.y);
+	//	//	else
+	//	//		m_enemy.setPosition(currentPosition.x - (1.5f * m_enemySpeedFactor), currentPosition.y);
+	//	//}
+	//	//else
+	//	//{
+	//	//	if (distanceABS >= 400.0f)
+	//	//		m_enemy.setPosition(currentPosition.x - (1.5f * m_enemySpeedFactor), currentPosition.y);
+	//	//	else
+	//	//		m_enemy.setPosition(currentPosition.x + (1.5f * m_enemySpeedFactor), currentPosition.y);
+	//	//}
+
+	//	//Regular
+	//	/*if (m_player.getPosition().x > currentPosition.x)
+	//	{
+	//		if ((currentPosition.x + (2.0f * m_enemySpeedFactor)) > 20.0f)
+	//		m_enemy.setPosition(currentPosition.x - (2.0f * m_enemySpeedFactor), currentPosition.y);
+	//	}
+	//	else
+	//	{
+	//		if ((currentPosition.x + (2.0f * m_enemySpeedFactor)) < 780.0f)
+	//		m_enemy.setPosition(currentPosition.x + (2.0f * m_enemySpeedFactor), currentPosition.y);
+	//	}*/
+	//}
 }
 
 // Circle to circle collision detection
@@ -367,14 +410,14 @@ void Game::update(double dt)
 			m_enemySpeedFactor = 0.75f;
 		}
 		else
-			m_enemySpeedFactor = 1.5f + (m_score / 2000.0f);
+			m_enemySpeedFactor = 1.5f; //+ (m_score / 2000.0f);
 		if (checkCollision(m_player, m_enemy))
 		{
 			if (m_isPoweredUp)
 			{
 				m_isEnemyAlive = false;
 				m_enemy.setPosition(-200.0f, -200.0f);
-				m_enemyTimer = 300;
+				m_enemyTimer = 60;
 			}
 			else
 			{
@@ -434,6 +477,8 @@ void Game::render()
 
 	m_window.draw(m_topBar);
 	m_window.draw(m_botBar);
+	m_window.draw(m_innerBox);
+	m_window.draw(m_outerBox);
 	m_window.draw(m_player);
 	for (int i = 0; i < 20; i++)
 	{
