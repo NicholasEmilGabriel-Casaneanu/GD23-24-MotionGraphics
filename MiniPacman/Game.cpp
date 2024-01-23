@@ -48,7 +48,7 @@ void Game::init()
 	m_player.setRadius(20.0f);
 	m_player.setOrigin(20.0f, 20.0f);
 	m_player.setFillColor(sf::Color::Yellow);
-	m_player.setPosition(50.0f, 100.0f);
+	m_player.setPosition(120.0f, 100.0f);
 	m_isFacingRight = true;
 	m_isPlayerAlive = true;
 
@@ -174,18 +174,25 @@ void Game::processGameEvents(sf::Event& event)
 			m_window.close();
 			break;
 		case sf::Keyboard::Up:
-			// Up key was pressed...
+			std::cout << "key_up\n";
+			m_playerDirection = Up;
+			break;
+		case sf::Keyboard::Down:
+			std::cout << "key_down\n";
+			m_playerDirection = Down;
 			break;
 		case sf::Keyboard::Left:
-			//std::cout << "key_left\n";
+			std::cout << "key_left\n";
+			m_playerDirection = Left;
 			//m_isFacingRight = false;
 			break;
 		case sf::Keyboard::Right:
-			//std::cout << "key_right\n";
+			std::cout << "key_right\n";
+			m_playerDirection = Right;
 			//m_isFacingRight = true;
 			break;
 		case sf::Keyboard::Space:
-			std::cout << "Spacebar Pressed\n";
+			//std::cout << "Spacebar Pressed\n";
 			if(!m_isSpacePressed)
 			{
 				if (m_isPaused && !m_isPlayerAlive)
@@ -198,7 +205,7 @@ void Game::processGameEvents(sf::Event& event)
 				}
 				else
 				{
-					m_isFacingRight = !m_isFacingRight;
+					//m_isFacingRight = !m_isFacingRight;
 				}
 				m_isSpacePressed = true;
 			}
@@ -226,7 +233,31 @@ void Game::processGameEvents(sf::Event& event)
 void Game::movePlayer()
 {
 	sf::Vector2f currentPosition = m_player.getPosition();
-	if (currentPosition.x <= -40)
+
+	switch (m_playerDirection) {
+	case Direction::Up:
+		if(currentPosition.y > 100.0f && currentPosition.x == 120.0f)
+			m_player.setPosition(currentPosition.x, currentPosition.y - 2.5f);
+		break;
+	case Direction::Down:
+		if (currentPosition.y < 350.0f && currentPosition.x == 120.0f)
+			m_player.setPosition(currentPosition.x, currentPosition.y + 2.5f);
+		break;
+	case Direction::Left:
+		if (currentPosition.x > 120.0f)// && currentPosition.y == 120.0f)
+			m_player.setPosition(currentPosition.x - 2.5f, currentPosition.y);
+		break;
+	case Direction::Right:
+		if (currentPosition.x < 520.0f)// && currentPosition.y == 120.0f)
+			m_player.setPosition(currentPosition.x + 2.5f, currentPosition.y);
+		break;
+	default:
+		break;
+	}
+	m_player.setPosition(abs(currentPosition.x), abs(currentPosition.y));
+
+	//Old Behaviour
+	/*if (currentPosition.x <= -40)
 		currentPosition.x = 840;
 	else if (currentPosition.x >= 840)
 		currentPosition.x = -40;
@@ -237,7 +268,7 @@ void Game::movePlayer()
 	else
 	{
 		m_player.setPosition(currentPosition.x - 2.5f, currentPosition.y);
-	}
+	}*/
 }
 
 void Game::moveEnemy()
@@ -411,7 +442,7 @@ void Game::update(double dt)
 		}
 		else
 			m_enemySpeedFactor = 1.5f; //+ (m_score / 2000.0f);
-		if (checkCollision(m_player, m_enemy))
+		/*if (checkCollision(m_player, m_enemy))
 		{
 			if (m_isPoweredUp)
 			{
@@ -424,7 +455,7 @@ void Game::update(double dt)
 				m_isPaused = true;
 				m_isPlayerAlive = false;
 			}
-		}
+		}*/
 		if (m_isPoweredUp)
 		{
 			m_player.setFillColor(sf::Color::Green);

@@ -26,6 +26,13 @@
 ///		game.run();
 /// </summary>
 
+enum Direction {
+	Up,
+	Down,
+	Left,
+	Right
+};
+
 class Game
 {
 public:
@@ -103,6 +110,7 @@ protected:
 	int m_powerTimer = 0;
 	bool m_isPoweredUp = false;
 	bool m_isPlayerAlive = true;
+	Direction m_playerDirection;
 
 	sf::CircleShape m_bitArray[20];
 	int m_bitsCount = 0;
