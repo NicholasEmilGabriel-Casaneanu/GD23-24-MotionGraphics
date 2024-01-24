@@ -27,23 +27,31 @@ void Game::init()
 
 	m_topBar.setSize(sf::Vector2f(800.0f, 5.0f));
 	m_topBar.setFillColor(sf::Color::Magenta);
-	m_topBar.setPosition(0.0f, 75.0f);
+	m_topBar.setPosition(0.0f, 200.0f);
 
 	m_botBar.setSize(sf::Vector2f(800.0f, 5.0f));
 	m_botBar.setFillColor(sf::Color::Magenta);
-	m_botBar.setPosition(0.0f, 120.0f);
+	m_botBar.setPosition(0.0f, 245.0f);
 
 	m_innerBox.setOutlineThickness(5.0f);
 	m_innerBox.setPosition(145.0f, 125.0f);
 	m_innerBox.setOutlineColor(sf::Color::Magenta);
-	m_innerBox.setFillColor(sf::Color::Transparent);
+	m_innerBox.setFillColor(sf::Color::Black);
 	m_innerBox.setSize(sf::Vector2f(500.0f, 200.0f));
 
 	m_outerBox.setOutlineThickness(5.0f);
 	m_outerBox.setPosition(100.0f, 80.0f);
 	m_outerBox.setOutlineColor(sf::Color::Magenta);
-	m_outerBox.setFillColor(sf::Color::Transparent);
+	m_outerBox.setFillColor(sf::Color::Black);
 	m_outerBox.setSize(sf::Vector2f(590.0f, 290.0f));
+
+	m_burakkuBokkusuIchi.setPosition(80.0f, 205.0f);
+	m_burakkuBokkusuIchi.setFillColor(sf::Color::Black);
+	m_burakkuBokkusuIchi.setSize(sf::Vector2f(40.0f, 40.0f));
+
+	m_burakkuBokkusuNi.setPosition(680.0f, 205.0f);
+	m_burakkuBokkusuNi.setFillColor(sf::Color::Black);
+	m_burakkuBokkusuNi.setSize(sf::Vector2f(40.0f, 40.0f));
 
 	m_player.setRadius(20.0f);
 	m_player.setOrigin(20.0f, 20.0f);
@@ -671,8 +679,10 @@ void Game::render()
 
 	m_window.draw(m_topBar);
 	m_window.draw(m_botBar);
-	m_window.draw(m_innerBox);
 	m_window.draw(m_outerBox);
+	m_window.draw(m_innerBox);
+	m_window.draw(m_burakkuBokkusuIchi);
+	m_window.draw(m_burakkuBokkusuNi);
 	m_window.draw(m_player);
 	for (int i = 0; i < 20; i++)
 	{

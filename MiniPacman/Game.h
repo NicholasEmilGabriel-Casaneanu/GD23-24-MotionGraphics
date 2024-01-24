@@ -107,11 +107,12 @@ protected:
 	sf::Text m_hiScoreText;
 	sf::Text m_powerUpText;
 	sf::Text m_centerText;
-
 	sf::RectangleShape m_topBar;
 	sf::RectangleShape m_botBar;
 	sf::RectangleShape m_innerBox;
 	sf::RectangleShape m_outerBox;
+	sf::RectangleShape m_burakkuBokkusuIchi;
+	sf::RectangleShape m_burakkuBokkusuNi;
 
 	bool m_isSpacePressed = false;
 	bool m_isPaused = false;
