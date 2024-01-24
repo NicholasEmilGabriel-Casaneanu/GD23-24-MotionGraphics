@@ -122,8 +122,12 @@ protected:
 	bool m_isPoweredUp = false;
 	bool m_isPlayerAlive = true;
 	Direction m_playerDirection;
+	Direction m_playerLastDirection;
 	Location m_playerLocation;
 	Location m_playerLastLocation;
+	bool m_playerQLeft = false;
+	bool m_playerQRight = false;
+	bool m_playerTransporting = false;
 
 	sf::CircleShape m_bitArray[20];
 	int m_bitsCount = 0;

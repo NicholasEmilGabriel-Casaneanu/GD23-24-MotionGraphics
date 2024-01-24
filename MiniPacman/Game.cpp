@@ -175,20 +175,44 @@ void Game::processGameEvents(sf::Event& event)
 			break;
 		case sf::Keyboard::Up:
 			std::cout << "key_up\n";
+			m_playerLastDirection = m_playerDirection;
 			m_playerDirection = Up;
 			break;
 		case sf::Keyboard::Down:
 			std::cout << "key_down\n";
+			m_playerLastDirection = m_playerDirection;
 			m_playerDirection = Down;
 			break;
 		case sf::Keyboard::Left:
 			std::cout << "key_left\n";
-			m_playerDirection = Left;
+			if (m_playerLocation == Location::LeftSide && (m_playerLastLocation == Location::TopLeft || m_playerLastLocation == Location::BotLeft))
+			{
+				m_playerQLeft = true;
+				m_playerLastDirection = m_playerDirection;
+				m_playerDirection = Left;
+			}
+			else
+			{
+				m_playerLastDirection = m_playerDirection;
+				m_playerDirection = Left;
+				m_playerQLeft = false;
+			}
 			//m_isFacingRight = false;
 			break;
 		case sf::Keyboard::Right:
 			std::cout << "key_right\n";
-			m_playerDirection = Right;
+			if (m_playerLocation == Location::RightSide && (m_playerLastLocation == Location::TopRight || m_playerLastLocation == Location::BotRight))
+			{
+				m_playerQRight = true;
+				m_playerLastDirection = m_playerDirection;
+				m_playerDirection = Right;
+			}
+			else
+			{
+				m_playerLastDirection = m_playerDirection;
+				m_playerDirection = Right;
+				m_playerQRight = false;
+			}
 			//m_isFacingRight = true;
 			break;
 		case sf::Keyboard::Space:
@@ -234,26 +258,126 @@ void Game::movePlayer()
 {
 	sf::Vector2f currentPosition = m_player.getPosition();
 	m_player.setPosition(abs(currentPosition.x), abs(currentPosition.y));
+	if (m_playerQLeft || m_playerQRight)
+	{
+		if (m_playerQLeft)
+		{
+			switch (m_playerLastDirection) {
+			case Direction::Up:
+				if (currentPosition.y > 100.0f && ((currentPosition.x == 120.0f) || (currentPosition.x == 670.0f)))
+					m_player.setPosition(currentPosition.x, currentPosition.y - 2.5f);
+				break;
+			case Direction::Down:
+				if (currentPosition.y < 350.0f && ((currentPosition.x == 120.0f) || (currentPosition.x == 670.0f)))
+					m_player.setPosition(currentPosition.x, currentPosition.y + 2.5f);
+				break;
+			case Direction::Left:
+				if (currentPosition.x > 120.0f && ((currentPosition.y == 100.0f) || (currentPosition.y == 350.0f)))
+					m_player.setPosition(currentPosition.x - 2.5f, currentPosition.y);
+				break;
+			case Direction::Right:
+				if (currentPosition.x < 670.0f && ((currentPosition.y == 100.0f) || (currentPosition.y == 350.0f)))
+					m_player.setPosition(currentPosition.x + 2.5f, currentPosition.y);
+				break;
+			default:
+				break;
+			}
+			if (m_player.getPosition().y >= 350.0f || m_player.getPosition().y <= 100.0f)
+				m_playerQLeft = false;
+			if (m_player.getPosition().y == 225.0f)
+			{
+				m_playerQLeft = false;
+				m_playerDirection = Left;
+				m_playerTransporting = true;
+			}
+		}
+		else if (m_playerQRight)
+		{
+			{
+				switch (m_playerLastDirection) {
+				case Direction::Up:
+					if (currentPosition.y > 100.0f && ((currentPosition.x == 120.0f) || (currentPosition.x == 670.0f)))
+						m_player.setPosition(currentPosition.x, currentPosition.y - 2.5f);
+					break;
+				case Direction::Down:
+					if (currentPosition.y < 350.0f && ((currentPosition.x == 120.0f) || (currentPosition.x == 670.0f)))
+						m_player.setPosition(currentPosition.x, currentPosition.y + 2.5f);
+					break;
+				case Direction::Left:
+					if (currentPosition.x > 120.0f && ((currentPosition.y == 100.0f) || (currentPosition.y == 350.0f)))
+						m_player.setPosition(currentPosition.x - 2.5f, currentPosition.y);
+					break;
+				case Direction::Right:
+					if (currentPosition.x < 670.0f && ((currentPosition.y == 100.0f) || (currentPosition.y == 350.0f)))
+						m_player.setPosition(currentPosition.x + 2.5f, currentPosition.y);
+					break;
+				default:
+					break;
+				}
+				if (m_player.getPosition().y >= 350.0f || m_player.getPosition().y <= 100.0f)
+					m_playerQRight = false;
+				if (m_player.getPosition().y == 225.0f)
+				{
+					m_playerQRight = false;
+					m_playerDirection = Right;
+					m_playerTransporting = true;
+				}
+			}
+		}
+	}
+	else
+	{
+		if (m_playerTransporting)
+		{
+			switch (m_playerDirection) {
+			case Direction::Left:
+				if (currentPosition.x <= -40.0f)
+					currentPosition.x = 840.0f;
+				if (m_playerLocation == Location::RightSide)
+				{
+					m_playerTransporting = false;
+				}
+				else
+					m_player.setPosition(currentPosition.x - 2.5f, currentPosition.y);
+				break;
+			case Direction::Right:
+				if (currentPosition.x >= 840)
+					currentPosition.x = -40;
+				if (m_playerLocation == Location::LeftSide)
+				{
+					m_playerTransporting = false;
+				}
+				else
+					m_player.setPosition(currentPosition.x + 2.5f, currentPosition.y);
+				break;
+			default:
+				break;
+			}
+		}
+		else
+		{
+			switch (m_playerDirection) {
+			case Direction::Up:
+				if (currentPosition.y > 100.0f && ((currentPosition.x == 120.0f) || (currentPosition.x == 670.0f)))
+					m_player.setPosition(currentPosition.x, currentPosition.y - 2.5f);
+				break;
+			case Direction::Down:
+				if (currentPosition.y < 350.0f && ((currentPosition.x == 120.0f) || (currentPosition.x == 670.0f)))
+					m_player.setPosition(currentPosition.x, currentPosition.y + 2.5f);
+				break;
+			case Direction::Left:
+				if (currentPosition.x > 120.0f && ((currentPosition.y == 100.0f) || (currentPosition.y == 350.0f)))
+					m_player.setPosition(currentPosition.x - 2.5f, currentPosition.y);
+				break;
+			case Direction::Right:
+				if (currentPosition.x < 670.0f && ((currentPosition.y == 100.0f) || (currentPosition.y == 350.0f)))
+					m_player.setPosition(currentPosition.x + 2.5f, currentPosition.y);
+				break;
+			default:
+				break;
+			}
+		}
 
-	switch (m_playerDirection) {
-	case Direction::Up:
-		if (currentPosition.y > 100.0f && ((currentPosition.x == 120.0f) || (currentPosition.x == 670.0f)))
-			m_player.setPosition(currentPosition.x, currentPosition.y - 2.5f);
-		break;
-	case Direction::Down:
-		if (currentPosition.y < 350.0f && ((currentPosition.x == 120.0f) || (currentPosition.x == 670.0f)))
-			m_player.setPosition(currentPosition.x, currentPosition.y + 2.5f);
-		break;
-	case Direction::Left:
-		if (currentPosition.x > 120.0f && ((currentPosition.y == 100.0f) || (currentPosition.y == 350.0f)))
-			m_player.setPosition(currentPosition.x - 2.5f, currentPosition.y);
-		break;
-	case Direction::Right:
-		if (currentPosition.x < 670.0f && ((currentPosition.y == 100.0f) || (currentPosition.y == 350.0f)))
-			m_player.setPosition(currentPosition.x + 2.5f, currentPosition.y);
-		break;
-	default:
-		break;
 	}
 
 	//Old Behaviour
@@ -387,7 +511,7 @@ void Game::spawnEnemy()
 void Game::updatePlayerLocation()
 {
 	sf::Vector2f currentPosition = m_player.getPosition();
-	m_player.setPosition(abs(currentPosition.x), abs(currentPosition.y));
+	//m_player.setPosition(abs(currentPosition.x), abs(currentPosition.y));
 	Location LastLocation = m_playerLocation;
 	if (currentPosition.y == 100.0f)
 	{
@@ -411,7 +535,7 @@ void Game::updatePlayerLocation()
 	{
 		if (currentPosition.x == 120.0f)
 			m_playerLocation = Location::LeftSide;
-		else
+		else if (currentPosition.x == 670.0f)
 			m_playerLocation = Location::RightSide;
 	}
 
