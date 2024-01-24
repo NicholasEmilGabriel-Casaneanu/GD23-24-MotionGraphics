@@ -33,6 +33,17 @@ enum Direction {
 	Right
 };
 
+enum Location {
+	TopSide,
+	Bottom,
+	LeftSide,
+	RightSide,
+	TopLeft,
+	TopRight,
+	BotLeft,
+	BotRight,
+};
+
 class Game
 {
 public:
@@ -111,6 +122,8 @@ protected:
 	bool m_isPoweredUp = false;
 	bool m_isPlayerAlive = true;
 	Direction m_playerDirection;
+	Location m_playerLocation;
+	Location m_playerLastLocation;
 
 	sf::CircleShape m_bitArray[20];
 	int m_bitsCount = 0;
@@ -125,6 +138,7 @@ protected:
 	void moveEnemy();
 	bool checkCollision(sf::CircleShape t_circleOne, sf::CircleShape t_CircleTwo);
 	void spawnEnemy();
+	void updatePlayerLocation();
 
 #ifdef TEST_FPS
 	sf::Text x_updateFPS;					// text used to display updates per second.

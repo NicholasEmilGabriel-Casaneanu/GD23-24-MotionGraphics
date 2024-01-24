@@ -233,28 +233,28 @@ void Game::processGameEvents(sf::Event& event)
 void Game::movePlayer()
 {
 	sf::Vector2f currentPosition = m_player.getPosition();
+	m_player.setPosition(abs(currentPosition.x), abs(currentPosition.y));
 
 	switch (m_playerDirection) {
 	case Direction::Up:
-		if(currentPosition.y > 100.0f && currentPosition.x == 120.0f)
+		if (currentPosition.y > 100.0f && ((currentPosition.x == 120.0f) || (currentPosition.x == 670.0f)))
 			m_player.setPosition(currentPosition.x, currentPosition.y - 2.5f);
 		break;
 	case Direction::Down:
-		if (currentPosition.y < 350.0f && currentPosition.x == 120.0f)
+		if (currentPosition.y < 350.0f && ((currentPosition.x == 120.0f) || (currentPosition.x == 670.0f)))
 			m_player.setPosition(currentPosition.x, currentPosition.y + 2.5f);
 		break;
 	case Direction::Left:
-		if (currentPosition.x > 120.0f)// && currentPosition.y == 120.0f)
+		if (currentPosition.x > 120.0f && ((currentPosition.y == 100.0f) || (currentPosition.y == 350.0f)))
 			m_player.setPosition(currentPosition.x - 2.5f, currentPosition.y);
 		break;
 	case Direction::Right:
-		if (currentPosition.x < 520.0f)// && currentPosition.y == 120.0f)
+		if (currentPosition.x < 670.0f && ((currentPosition.y == 100.0f) || (currentPosition.y == 350.0f)))
 			m_player.setPosition(currentPosition.x + 2.5f, currentPosition.y);
 		break;
 	default:
 		break;
 	}
-	m_player.setPosition(abs(currentPosition.x), abs(currentPosition.y));
 
 	//Old Behaviour
 	/*if (currentPosition.x <= -40)
@@ -384,6 +384,44 @@ void Game::spawnEnemy()
 		m_enemy.setPosition(750.0f, 100.0f);
 }
 
+void Game::updatePlayerLocation()
+{
+	sf::Vector2f currentPosition = m_player.getPosition();
+	m_player.setPosition(abs(currentPosition.x), abs(currentPosition.y));
+	Location LastLocation = m_playerLocation;
+	if (currentPosition.y == 100.0f)
+	{
+		if (currentPosition.x == 120.0f)
+			m_playerLocation = Location::TopLeft;
+		else if (currentPosition.x == 670.0f)
+			m_playerLocation = Location::TopRight;
+		else
+			m_playerLocation = Location::TopSide;
+	}
+	else if (currentPosition.y == 350.0f)
+	{
+		if (currentPosition.x == 120.0f)
+			m_playerLocation = Location::BotLeft;
+		else if (currentPosition.x == 670.0f)
+			m_playerLocation = Location::BotRight;
+		else
+			m_playerLocation = Location::Bottom;
+	}
+	else
+	{
+		if (currentPosition.x == 120.0f)
+			m_playerLocation = Location::LeftSide;
+		else
+			m_playerLocation = Location::RightSide;
+	}
+
+	if (LastLocation != m_playerLocation)
+	{
+		m_playerLastLocation = LastLocation;
+		std::cout << m_playerLocation << "\n";
+	}
+}
+
 ////////////////////////////////////////////////////////////
 void Game::update(double dt)
 {
@@ -403,6 +441,7 @@ void Game::update(double dt)
 
 		//Player, Enemy, Collisions
 		movePlayer();
+		updatePlayerLocation();
 		if (m_isEnemyAlive)
 			moveEnemy();
 		for (int i = 0; i < 20; i++)
