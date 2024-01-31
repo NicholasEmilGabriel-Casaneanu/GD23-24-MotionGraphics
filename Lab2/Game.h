@@ -81,7 +81,8 @@ protected:
 	void moveLeft();
 	void moveRight();
 
-
+	void generateWall();
+	void updateWall();
 
 
 	// Font used for all text
@@ -99,8 +100,13 @@ protected:
 	sf::CircleShape m_player;
 	sf::Vector2f m_playerPos;
 
+	float const CHUNK_WIDTH{ 80.0f };
+
 	bool m_isLeftPressed;
 	bool m_isRightPressed;
+
+	bool m_wallArray[10]{ 1,1,1,1,0,0,0,1,1,1 };
+	sf::RectangleShape m_shapeArray[10];
 #endif // TEST_FPS
 
 };

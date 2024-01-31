@@ -32,6 +32,8 @@ void Game::init()
 	m_isLeftPressed = false;
 	m_isRightPressed = false;
 
+	generateWall();
+
 #ifdef TEST_FPS
 	x_updateFPS.setFont(m_arialFont);
 	x_updateFPS.setPosition(20, 300);
@@ -145,6 +147,27 @@ void Game::moveRight()
 	m_player.setPosition(m_playerPos);
 }
 
+void Game::generateWall()
+{
+	for (int i = 0; i < 10; i++)
+	{
+		if (m_wallArray[i])
+		{
+			m_shapeArray[i].setPosition(CHUNK_WIDTH * i, 0.0f);
+			m_shapeArray[i].setSize(sf::Vector2f(CHUNK_WIDTH, 400.0f));
+			m_shapeArray[i].setFillColor(sf::Color::Magenta);
+		}
+	}
+}
+
+void Game::updateWall()
+{
+	for (int i = 0; i < 10; i++)
+	{
+		m_shapeArray[i].setPosition(m_shapeArray[i].getPosition().x, m_shapeArray[i].getPosition().y + 10.0f);
+	}
+}
+
 ////////////////////////////////////////////////////////////
 void Game::update(double dt)
 {
@@ -152,6 +175,8 @@ void Game::update(double dt)
 		moveLeft();
 	if (m_isRightPressed)
 		moveRight();
+
+	updateWall();
 }
 
 ////////////////////////////////////////////////////////////
@@ -162,6 +187,10 @@ void Game::render()
 	m_window.draw(x_updateFPS);
 	m_window.draw(x_drawFPS);
 	m_window.draw(m_player);
+	for (int i = 0; i < 10; i++)
+	{
+		m_window.draw(m_shapeArray[i]);
+	}
 #endif
 	m_window.display();
 }
