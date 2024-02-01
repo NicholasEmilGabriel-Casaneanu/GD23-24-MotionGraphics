@@ -101,7 +101,7 @@ protected:
 	sf::Vector2f m_playerPos;
 
 	float const CHUNK_WIDTH{ 80.0f };
-	float const CHUNK_HEIGHT{ 50.0f };
+	float const CHUNK_HEIGHT{ 66.0f };
 
 	bool m_isLeftPressed;
 	bool m_isRightPressed;
@@ -116,7 +116,11 @@ protected:
 							1,1,1,1,0,0,0,1,1,1,
 							1,1,1,0,0,0,1,1,1,1,
 							1,1,1,0,0,0,0,1,1,1 };
-	sf::RectangleShape m_shapeArray[10][10];
+	sf::RectangleShape m_shapeArrayOne[10][10];
+	sf::RectangleShape m_shapeArrayTwo[10][10];
+
+	float firstY{ 0.0f };
+	float secondY{ 0.0f };
 #endif // TEST_FPS
 
 };
