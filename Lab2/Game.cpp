@@ -151,11 +151,15 @@ void Game::generateWall()
 {
 	for (int i = 0; i < 10; i++)
 	{
-		if (m_wallArray[i])
+		for (int j = 0; j < 10; j++)
 		{
-			m_shapeArray[i].setPosition(CHUNK_WIDTH * i, 0.0f);
-			m_shapeArray[i].setSize(sf::Vector2f(CHUNK_WIDTH, 400.0f));
-			m_shapeArray[i].setFillColor(sf::Color::Magenta);
+			if (m_wallArray[(i * 10) + j] == 1)
+			{
+				m_shapeArray[i][j].setPosition(CHUNK_WIDTH * j, i * CHUNK_HEIGHT);
+				m_shapeArray[i][j].setSize(sf::Vector2f(CHUNK_WIDTH, CHUNK_HEIGHT));
+				m_shapeArray[i][j].setFillColor(sf::Color::Magenta);
+				std::cout << i << "  " << j << "\n";
+			}
 		}
 	}
 }
@@ -164,7 +168,10 @@ void Game::updateWall()
 {
 	for (int i = 0; i < 10; i++)
 	{
-		m_shapeArray[i].setPosition(m_shapeArray[i].getPosition().x, m_shapeArray[i].getPosition().y + 10.0f);
+		for (int j = 0; j < 10; j++)
+		{
+			m_shapeArray[i][j].setPosition(m_shapeArray[i][j].getPosition().x, m_shapeArray[i][j].getPosition().y + 0.1f);
+		}
 	}
 }
 
@@ -189,7 +196,10 @@ void Game::render()
 	m_window.draw(m_player);
 	for (int i = 0; i < 10; i++)
 	{
-		m_window.draw(m_shapeArray[i]);
+		for (int j = 0; j < 10; j++)
+		{
+			m_window.draw(m_shapeArray[i][j]);
+		}
 	}
 #endif
 	m_window.display();

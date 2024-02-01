@@ -101,12 +101,22 @@ protected:
 	sf::Vector2f m_playerPos;
 
 	float const CHUNK_WIDTH{ 80.0f };
+	float const CHUNK_HEIGHT{ 50.0f };
 
 	bool m_isLeftPressed;
 	bool m_isRightPressed;
 
-	bool m_wallArray[10]{ 1,1,1,1,0,0,0,1,1,1 };
-	sf::RectangleShape m_shapeArray[10];
+	int m_wallArray[1000]{  1,1,1,1,0,0,0,1,1,1,
+							1,1,1,0,0,0,1,1,1,1,
+							1,1,1,0,0,0,0,1,1,1,
+							1,1,0,0,0,1,1,1,1,1,
+							1,1,0,0,0,0,0,1,1,1,
+							1,1,1,0,0,0,1,1,1,1,
+							1,1,1,0,0,0,0,1,1,1,
+							1,1,1,1,0,0,0,1,1,1,
+							1,1,1,0,0,0,1,1,1,1,
+							1,1,1,0,0,0,0,1,1,1 };
+	sf::RectangleShape m_shapeArray[10][10];
 #endif // TEST_FPS
 
 };
