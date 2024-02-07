@@ -82,7 +82,12 @@ protected:
 	void moveRight();
 
 	void generateWall();
+	void generateWallTwo();
 	void updateWall();
+	void updateWallTwo();
+
+	void shootBullet();
+	void updateBullets();
 
 
 	// Font used for all text
@@ -105,6 +110,9 @@ protected:
 
 	bool m_isLeftPressed;
 	bool m_isRightPressed;
+
+	sf::CircleShape m_bullets[50];
+	bool m_bulletCounter[50];
 
 	int m_wallArray[1000]{  1,1,1,1,0,0,0,1,1,1,
 							1,1,1,0,0,0,1,1,1,1,

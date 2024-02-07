@@ -28,11 +28,37 @@ void Game::init()
 	m_playerPos.x = m_window.getSize().x / 2.0f;
 	m_playerPos.y = m_window.getSize().y - 50.0f;
 	m_player.setPosition(m_playerPos);
+	m_player.setOrigin(20.0f, 20.0f);
+
+	for (int i = 0; i < 50; i++)
+	{
+		m_bullets[i].setRadius(5.0f);
+		m_bullets[i].setFillColor(sf::Color::Yellow);
+		m_bulletCounter[i] = false;
+	}
 
 	m_isLeftPressed = false;
 	m_isRightPressed = false;
 
 	generateWall();
+
+	/*for (int i = 0; i < 10; i++)
+	{
+		for (int j = 0; j < 10; j++)
+		{
+			if (m_wallArray[(i * 10) + j] == 1)
+			{
+				m_shapeArrayTwo[i][j].setPosition(CHUNK_WIDTH * j, -i * CHUNK_HEIGHT * 2);
+				m_shapeArrayTwo[i][j].setSize(sf::Vector2f(CHUNK_WIDTH, CHUNK_HEIGHT));
+				m_shapeArrayTwo[i][j].setFillColor(sf::Color::Magenta);
+				std::cout << i << "  " << j << "\n";
+			}
+			if (i == 9 && j == 9)
+			{
+				secondY = -i * CHUNK_HEIGHT - CHUNK_HEIGHT;
+			}
+		}
+	}*/
 
 #ifdef TEST_FPS
 	x_updateFPS.setFont(m_arialFont);
@@ -129,6 +155,9 @@ void Game::processGameEvents(sf::Event& event)
 		case sf::Keyboard::Right:
 			m_isRightPressed = false;
 			break;
+		case sf::Keyboard::Space:
+			shootBullet();
+			break;
 		default:
 			break;
 		}
@@ -155,14 +184,35 @@ void Game::generateWall()
 		{
 			if (m_wallArray[(i * 10) + j] == 1)
 			{
-				m_shapeArrayOne[i][j].setPosition(CHUNK_WIDTH * j, -i * CHUNK_HEIGHT);
+				m_shapeArrayOne[i][j].setPosition(CHUNK_WIDTH * j, -i * CHUNK_HEIGHT - CHUNK_HEIGHT);
 				m_shapeArrayOne[i][j].setSize(sf::Vector2f(CHUNK_WIDTH, CHUNK_HEIGHT));
 				m_shapeArrayOne[i][j].setFillColor(sf::Color::Magenta);
 				std::cout << i << "  " << j << "\n";
 			}
 			if (i == 9 && j == 9)
 			{
-				float firstY = -i * CHUNK_HEIGHT - CHUNK_HEIGHT;
+				firstY = -i * CHUNK_HEIGHT - CHUNK_HEIGHT;
+			}
+		}
+	}
+}
+
+void Game::generateWallTwo()
+{
+	for (int i = 0; i < 10; i++)
+	{
+		for (int j = 0; j < 10; j++)
+		{
+			if (m_wallArray[(i * 10) + j] == 1)
+			{
+				m_shapeArrayTwo[i][j].setPosition(CHUNK_WIDTH * j, -i * CHUNK_HEIGHT - CHUNK_HEIGHT);
+				m_shapeArrayTwo[i][j].setSize(sf::Vector2f(CHUNK_WIDTH, CHUNK_HEIGHT));
+				m_shapeArrayTwo[i][j].setFillColor(sf::Color::Magenta);
+				std::cout << i << "  " << j << "\n";
+			}
+			if (i == 9 && j == 9)
+			{
+				secondY = -i * CHUNK_HEIGHT - CHUNK_HEIGHT;
 			}
 		}
 	}
@@ -193,6 +243,55 @@ void Game::updateWall()
 	}
 }
 
+void Game::updateWallTwo()
+{
+	for (int i = 0; i < 10; i++)
+	{
+		for (int j = 0; j < 10; j++)
+		{
+			m_shapeArrayTwo[i][j].setPosition(m_shapeArrayTwo[i][j].getPosition().x, m_shapeArrayTwo[i][j].getPosition().y + 5.f);
+			secondY = m_shapeArrayTwo[i][j].getPosition().y;
+		}
+	}
+	std::cout << secondY << "\n";
+	if (secondY >= ScreenSize::s_height)
+	{
+		for (int i = 0; i < 10; i++)
+		{
+			for (int j = 0; j < 10; j++)
+			{
+				m_shapeArrayTwo[i][j].setPosition(-50.0f, -50.0f);
+
+			}
+		}
+		generateWallTwo();
+	}
+}
+
+void Game::shootBullet()
+{
+	for (int i = 0; i < 50; i++)
+	{
+		if (m_bulletCounter[i] == false)
+		{
+			m_bullets[i].setPosition(m_playerPos);
+			m_bulletCounter[i] = true;
+			break;
+		}
+	}
+}
+
+void Game::updateBullets()
+{
+	for (int i = 0; i < 50; i++)
+	{
+		if (m_bulletCounter[i])
+		{
+			m_bullets[i].move(0.0f, -10.0f);
+		}
+	}
+}
+
 ////////////////////////////////////////////////////////////
 void Game::update(double dt)
 {
@@ -202,6 +301,8 @@ void Game::update(double dt)
 		moveRight();
 
 	updateWall();
+	updateWallTwo();
+	updateBullets();
 }
 
 ////////////////////////////////////////////////////////////
@@ -217,6 +318,14 @@ void Game::render()
 		for (int j = 0; j < 10; j++)
 		{
 			m_window.draw(m_shapeArrayOne[i][j]);
+			m_window.draw(m_shapeArrayTwo[i][j]);
+		}
+	}
+	for (int i = 0; i < 50; i++)
+	{
+		if (m_bulletCounter[i])
+		{
+			m_window.draw(m_bullets[i]);
 		}
 	}
 #endif
