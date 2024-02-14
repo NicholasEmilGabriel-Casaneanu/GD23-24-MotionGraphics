@@ -169,57 +169,35 @@ public:
 	}
 	void run()
 	{
-
-
 		sf::Time timePerFrame = sf::seconds(1.0f / 60.0f);
-
-
 		sf::Time timeSinceLastUpdate = sf::Time::Zero;
-
-
 		sf::Clock clock;
-
 		clock.restart();
-
 		while (window.isOpen())
 		{
-
 			sf::Event event;
 			while (window.pollEvent(event))
 			{
 				if (event.type == sf::Event::Closed)
 					window.close();
 			}
-
-
 			timeSinceLastUpdate += clock.restart();
-
-
 			if (timeSinceLastUpdate > timePerFrame)
 			{
-
 				for (int row = 0; row < numRows; row++)
 				{
 					for (int col = 0; col < numCols; col++)
 					{
-
 						level[row][col].move(-3.7, 0);
 					}
-
 				}
-
-
 				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && velocityY == 0)
 				{
 					velocityY = -11.8;
 				}
-
 				velocityY = velocityY + gravity;
 				playerShape.move(0, velocityY);
-
-
 				gravity = 0.6;
-
 				for (int row = 0; row < numRows; row++)
 				{
 					for (int col = 0; col < numCols; col++)
@@ -243,10 +221,7 @@ public:
 										init();
 									}
 								}
-
-
 							}
-
 						}
 						if (velocityY < 0)
 						{
@@ -256,9 +231,7 @@ public:
 								{
 									init();
 								}
-
 							}
-
 						}
 						if (levelData[row][col] == 2)
 						{
@@ -269,27 +242,20 @@ public:
 						}
 					}
 				}
-
 				if (playerShape.getPosition().y > 600)
 				{
 					init();
 				}
-
 				window.clear();
-
 				for (int row = 0; row < numRows; row++)
 				{
 					for (int col = 0; col < numCols; col++)
 					{
 						window.draw(level[row][col]);
-
 					}
 				}
 				window.draw(playerShape);
-
-
 				window.display();
-
 				timeSinceLastUpdate = sf::Time::Zero;
 			}
 		}
