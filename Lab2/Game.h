@@ -89,6 +89,8 @@ protected:
 	void shootBullet();
 	void updateBullets();
 
+	bool checkPlayerCollision(sf::RectangleShape(&t_shapeArray)[10][10]);
+
 
 	// Font used for all text
 	sf::Font m_arialFont;
@@ -117,10 +119,10 @@ protected:
 	int m_wallArray[1000]{  1,1,1,1,0,0,0,1,1,1,
 							1,1,1,0,0,0,1,1,1,1,
 							1,1,1,0,0,0,0,1,1,1,
-							1,1,0,0,0,1,1,1,1,1,
+							1,1,0,0,0,2,1,1,1,1,
 							1,1,0,0,0,0,0,1,1,1,
-							1,1,1,0,0,0,1,1,1,1,
-							1,1,1,0,0,0,0,1,1,1,
+							1,1,2,0,0,0,1,1,1,1,
+							1,1,1,0,0,0,0,2,1,1,
 							1,1,1,1,0,0,0,1,1,1,
 							1,1,1,0,0,0,1,1,1,1,
 							1,1,1,0,0,0,0,1,1,1 };
