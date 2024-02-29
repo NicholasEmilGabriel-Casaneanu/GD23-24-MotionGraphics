@@ -79,27 +79,41 @@ public:
 	int levelData[numRows][numCols] =
 	{
 	{ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1 },
-	{ 0,0,0,0,0,0,1,1,0,0,1,0,1,1,0,0,1,1,1,0,1,0,0,1,0,0,0,1,1,0,0,1,0,0,0,0,1,0,0,0,1,1,0,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,1 },
-	{ 0,0,0,0,0,0,1,0,1,0,1,0,1,0,1,0,1,0,0,0,1,1,0,1,0,0,0,1,0,1,0,1,0,0,0,1,0,1,0,1,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1 },
-	{ 0,0,0,0,0,0,1,1,1,0,1,0,1,0,1,0,1,1,1,0,1,0,1,1,0,0,0,1,1,0,0,1,0,0,0,1,0,1,0,0,1,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1 },
-	{ 0,0,0,0,0,0,1,0,1,0,1,0,1,0,1,0,1,0,0,0,1,0,0,1,0,0,0,1,0,1,0,1,0,0,0,1,1,1,0,0,0,1,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1 },
-	{ 0,0,0,0,0,0,1,1,1,0,1,0,1,1,0,0,1,1,1,0,1,0,0,1,0,0,0,1,1,1,0,1,1,1,0,1,0,1,0,1,1,2,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1 },
+	{ 0,0,0,0,0,0,1,1,0,0,1,1,1,1,0,0,0,1,0,0,1,1,1,0,0,0,0,1,1,0,0,1,0,0,0,0,1,0,0,0,1,1,0,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,1 },
+	{ 0,0,0,0,0,0,1,0,1,0,1,0,0,0,0,0,1,0,1,0,1,0,0,1,0,0,0,1,0,1,0,1,0,0,0,1,0,1,0,1,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1 },
+	{ 0,0,0,0,0,0,1,1,1,0,1,1,1,0,0,0,1,1,1,0,1,1,1,0,0,0,0,1,1,0,0,1,0,0,0,1,0,1,0,0,1,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1 },
+	{ 0,0,0,0,0,0,1,0,1,0,1,0,0,0,0,0,1,0,1,0,1,0,0,1,0,0,0,1,0,1,0,1,0,0,0,1,1,1,0,1,1,1,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1 },
+	{ 0,0,0,0,0,0,1,1,1,0,1,1,1,1,0,0,1,0,1,0,1,0,0,1,0,0,0,1,1,1,0,1,1,1,0,0,0,0,0,0,0,2,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1 },
 	{ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1 },
-	{ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1 },
-	{ 0,0,0,0,0,0,0,0,0,0,0,0,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1 },
-	{ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1 },
+	{ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1 },
+	{ 0,0,0,0,0,0,0,0,0,0,0,0,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1 },
+	{ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1 },
 	{ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1 },
 	{ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1 },
 	{ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,3,0,0,0,0,0,0,0,0,0,0,0,1 },
 	{ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,3,0,0,0,3,0,0,1 },
-	{ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,3,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1 },
-	{ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,3,0,0,0,0,0,0,0,0,1 },
+	{ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1 },
+	{ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,3,0,0,0,0,0,0,0,0,1 },
 	{ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,2,2,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1 },
 	{ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,1,0,0,2,2,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1 },
-	{ 0,1,1,0,0,0,2,0,2,0,0,0,1,0,2,0,0,1,2,0,1,0,0,3,0,0,0,0,0,1,0,0,2,2,0,0,0,0,0,1,0,0,0,0,0,4,0,0,0,0,0,0,0,0,0,3,0,0,0,1 },
+	{ 0,1,1,0,0,0,2,0,0,0,0,0,1,0,0,0,0,1,2,0,1,0,0,3,0,0,0,0,0,1,0,0,2,2,0,0,0,0,0,1,0,0,0,0,0,4,0,0,0,0,0,0,0,0,0,3,0,0,0,1 },
 	{ 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1 }, };
 
 	sf::RectangleShape level[numRows][numCols];
+	sf::Texture brick1;
+	sf::Texture brick2;
+	sf::Texture brick3;
+	sf::Texture* brick1ptr;
+	sf::Texture* brick2ptr;
+	sf::Texture* brick3ptr;
+	sf::Texture spike1;
+	sf::Texture spike2;
+	sf::Texture spike3;
+	sf::Texture* spike1ptr;
+	sf::Texture* spike2ptr;
+	sf::Texture* spike3ptr;
+	sf::Texture bee1;
+	sf::Texture* bee1ptr;
 
 	Game()
 	{
@@ -109,8 +123,33 @@ public:
 	{
 
 		view = window.getDefaultView();
-		playerShape.setSize(sf::Vector2f(20, 20));
+		playerShape.setSize(sf::Vector2f(40, 40));
 		playerShape.setPosition(160, 500);
+
+		if (!brick1.loadFromFile("ASSETS/IMAGES/brick1.png"))
+			std::cout << "horse";
+		if (!brick2.loadFromFile("ASSETS/IMAGES/brick2.png"))
+			std::cout << "horse";
+		if (!brick3.loadFromFile("ASSETS/IMAGES/brick3.png"))
+			std::cout << "horse";
+		if (!spike1.loadFromFile("ASSETS/IMAGES/spike1.png"))
+			std::cout << "horse";
+		if (!spike2.loadFromFile("ASSETS/IMAGES/spike2.png"))
+			std::cout << "horse";
+		if (!spike3.loadFromFile("ASSETS/IMAGES/spike3.png"))
+			std::cout << "horse";
+		if (!bee1.loadFromFile("ASSETS/IMAGES/bee1.png"))
+			std::cout << "horse";
+
+		brick1ptr = &brick1;
+		brick2ptr = &brick2;
+		brick3ptr = &brick3;
+
+		spike1ptr = &spike1;
+		spike2ptr = &spike2;
+		spike3ptr = &spike3;
+
+		bee1ptr = &bee1;
 
 		for (int row = 0; row < numRows; row++)
 		{
@@ -122,34 +161,49 @@ public:
 
 					level[row][col].setSize(sf::Vector2f(70, 30));
 					level[row][col].setPosition(col * 70, row * 30);
-					level[row][col].setFillColor(sf::Color::Red);
+					//level[row][col].setFillColor(sf::Color::Red);
+					int roll = rand() % 3;
+					switch (roll) {
+					case 0:
+						level[row][col].setTexture(brick1ptr);
+						break;
+					case 1:
+						level[row][col].setTexture(brick2ptr);
+						break;
+					case 2:
+						level[row][col].setTexture(brick3ptr);
+						break;
+					default:
+						break;
+					}
+					
 				}
 				if (levelData[row][col] == 0)
 				{
 
 					level[row][col].setSize(sf::Vector2f(70, 30));
 					level[row][col].setPosition(col * 70, row * 30);
-					level[row][col].setFillColor(sf::Color::Black);
+					//level[row][col].setFillColor(sf::Color::Black);
 				}
 				if (levelData[row][col] == 2)
 				{
 					level[row][col].setSize(sf::Vector2f(70, 30));
 					level[row][col].setPosition(col * 70, row * 30);
-					level[row][col].setFillColor(sf::Color::Blue);
+					//level[row][col].setFillColor(sf::Color::Blue);
 
 				}
 				if (levelData[row][col] == 3)
 				{
 					level[row][col].setSize(sf::Vector2f(70, 30));
 					level[row][col].setPosition(col * 70, row * 30);
-					level[row][col].setFillColor(sf::Color::Yellow);
+					//level[row][col].setFillColor(sf::Color::Yellow);
 
 				}
 				if (levelData[row][col] == 4)
 				{
 					level[row][col].setSize(sf::Vector2f(70, 30));
 					level[row][col].setPosition(col * 70, row * 30);
-					level[row][col].setFillColor(sf::Color::Green);
+					//level[row][col].setFillColor(sf::Color::Green);
 
 				}
 
@@ -157,14 +211,14 @@ public:
 			std::cout << std::endl;
 		}
 
-		if (!playerTexture.loadFromFile("ASSETS/IMAGES/Untitled.png"))
+		if (!playerTexture.loadFromFile("ASSETS/IMAGES/Untitled2.png"))
 			std::cout << "horse";
 
 		playerSprite.setTexture(playerTexture);
 		currentFrame = 0;
 		frameCounter = 0;
 		playerSprite.setTextureRect(sf::IntRect(frameWidth * (currentFrame % 4), frameHeight * (currentFrame / 4), frameWidth, frameHeight));
-		playerSprite.setScale(0.07, 0.07);
+		playerSprite.setScale(0.14, 0.15);
 
 	}
 	void run()
@@ -281,7 +335,7 @@ public:
 
 	void animate() {
 		frameCounter++;
-		if (frameCounter >= 10)
+		if (frameCounter >= 6)
 		{
 			frameCounter = 0;
 			currentFrame++;
@@ -292,7 +346,71 @@ public:
 				std::cout << "The current frame is " << currentFrame << "\n";
 			}
 			playerSprite.setTextureRect(sf::IntRect(0 + (frameWidth * (currentFrame % 4)), 0 + (frameHeight * (currentFrame / 4)), frameWidth, frameHeight));
+			for (int row = 0; row < numRows; row++)
+			{
+				for (int col = 0; col < numCols; col++)
+				{
+
+					if (levelData[row][col] == 1)
+					{
+						//level[row][col].setFillColor(sf::Color::Red);
+						int roll = rand() % 3;
+						switch (roll) {
+						case 0:
+							level[row][col].setTexture(brick1ptr);
+							break;
+						case 1:
+							level[row][col].setTexture(brick2ptr);
+							break;
+						case 2:
+							level[row][col].setTexture(brick3ptr);
+							break;
+						default:
+							break;
+						}
+
+					}
+					if (levelData[row][col] == 0)
+					{
+						level[row][col].setFillColor(sf::Color::Black);
+					}
+					if (levelData[row][col] == 2)
+					{
+						//level[row][col].setFillColor(sf::Color::Blue);
+						int roll = rand() % 3;
+						switch (roll) {
+						case 0:
+							level[row][col].setTexture(spike1ptr);
+							break;
+						case 1:
+							level[row][col].setTexture(spike2ptr);
+							break;
+						case 2:
+							level[row][col].setTexture(spike3ptr);
+							break;
+						default:
+							break;
+						}
+
+					}
+					if (levelData[row][col] == 3)
+					{
+						//level[row][col].setFillColor(sf::Color::Yellow);
+						level[row][col].setTexture(bee1ptr);
+					}
+					if (levelData[row][col] == 4)
+					{
+						level[row][col].setFillColor(sf::Color::Green);
+					}
+
+				}
+				std::cout << std::endl;
+			}
 		}
+
+		if (velocityY > 0 || velocityY < 0)
+			playerSprite.setTextureRect(sf::IntRect(0 + (frameWidth * (1 % 4)), 0 + (frameHeight * (1 / 4)), frameWidth, frameHeight));
+
 	}
 };
 
